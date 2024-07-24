@@ -1,6 +1,7 @@
 library(shiny)
 library(mia)
 library(miaViz)
+library(biomformat)
 
 mia_datasets <- data(package = "mia")
 mia_datasets <- mia_datasets$results[ , "Item"]
@@ -40,7 +41,7 @@ ui <- fluidPage(
                  value = "rda",
 
           fileInput(inputId = "file",
-                    label = "Object from rda:",
+                    label = "RDA:",
                     accept = ".rda")
         
         ),
@@ -60,7 +61,23 @@ ui <- fluidPage(
           fileInput(inputId = "rowdata",
                     label = "rowData",
                     accept = ".csv")     
+        ),
+      
+        tabPanel(title = "Foreign",
+                 value = "foreign",
+                 
+          fileInput(inputId = "biom",
+                    label = "BIOM:",
+                    accept = ".biom"),
+          
+          checkboxInput(inputId = "rm.tax.pref",
+                        label = "Remove taxa prefixes"),
+          
+          checkboxInput(inputId = "rank.from.pref",
+                        label = "Derive taxa from prefixes")
+        
         )
+
       ),
       
       actionButton("goButton", "Build!", class = "btn-success")
@@ -116,7 +133,19 @@ server <- function(input, output) {
                                                 colData = coldata,
                                                 rowData = rowdata)
           })
+        
+      }else if( input$format == "foreign" ){
+        
+          isolate({
+              req(input$biom)
+              biom_object <- read_biom(input$biom$datapath)
+              items$tse <- convertFromBIOM(biom_object,
+                                           removeTaxaPrefixes = input$rm.tax.pref,
+                                           rankFromPrefix = input$rank.from.pref)
+          })
+        
       }
+    
   })
       
   output$object <- renderPrint({
