@@ -19,12 +19,6 @@ ui <- fluidPage(
     # Sidebar panel for inputs ----
     sidebarPanel(
       
-     # radioButtons(inputId = "format",
-     #              label = "Format:",
-     #              choices = c("dataset", "rda", "raw"),
-     #              selected = "dataset",
-     #              inline = TRUE),
-      
       tabsetPanel(id = "format",
         
         tabPanel(title = "Dataset",
@@ -59,7 +53,7 @@ ui <- fluidPage(
                     accept = ".csv"),
                  
           fileInput(inputId = "rowdata",
-                    label = "rowData",
+                    label = "rowData:",
                     accept = ".csv")     
         ),
       
@@ -79,8 +73,9 @@ ui <- fluidPage(
         )
 
       ),
-      
-      actionButton("goButton", "Build!", class = "btn-success")
+        
+      actionButton("build", "Build!", class = "btn-success"),
+      actionButton("launch", "Launch!", class = "btn-success")
     
     ),
     
@@ -99,22 +94,22 @@ ui <- fluidPage(
 # Define server logic required to draw a histogram ----
 server <- function(input, output) {
   
-  items <- reactiveValues()
+  rObjects <- reactiveValues()
   
   observe({
     
-      input$goButton
+      input$build
 
       if( input$format == "dataset" ){
         
-          items$tse <- isolate(get(input$data))
+          rObjects$tse <- isolate(get(input$data))
 
       }else if( input$format == "rda" ){
         
           isolate({
               req(input$file)
               load(file = input$file$datapath)
-              items$tse <- get(gsub(".rda", "", input$file$name))
+              rObjects$tse <- get(gsub(".rda", "", input$file$name))
           })
           
       }else if( input$format == "raw" ){
@@ -129,9 +124,11 @@ server <- function(input, output) {
               
               names(assay_list) <- gsub(".csv", "", input$assay$name)
               
-              items$tse <- SummarizedExperiment(assays = assay_list,
-                                                colData = coldata,
-                                                rowData = rowdata)
+              rObjects$tse <- SummarizedExperiment(
+                assays = assay_list,
+                colData = coldata,
+                rowData = rowdata
+              )
           })
         
       }else if( input$format == "foreign" ){
@@ -139,9 +136,12 @@ server <- function(input, output) {
           isolate({
               req(input$biom)
               biom_object <- read_biom(input$biom$datapath)
-              items$tse <- convertFromBIOM(biom_object,
-                                           removeTaxaPrefixes = input$rm.tax.pref,
-                                           rankFromPrefix = input$rank.from.pref)
+              
+              rObjects$tse <- convertFromBIOM(
+                biom_object,
+                removeTaxaPrefixes = input$rm.tax.pref,
+                rankFromPrefix = input$rank.from.pref
+              )
           })
         
       }
@@ -149,12 +149,12 @@ server <- function(input, output) {
   })
       
   output$object <- renderPrint({
-    items$tse
+    rObjects$tse
   })
 
   output$download <- downloadHandler(
     filename = function() paste0("se-", Sys.Date(), ".rds"),
-    content = function(file) saveRDS(items$tse, file)
+    content = function(file) saveRDS(rObjects$tse, file)
   )
 
 }
