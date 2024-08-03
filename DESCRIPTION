@@ -1,10 +1,10 @@
 Package: iSEEbug
-Title: What the Package Does (One Line, Title Case)
 Version: 0.1.0
 Authors@R: 
     person(given = "Giulio", family = "Benedetti", role = c("aut", "cre"),
            email = "giulio.benedetti@utu.fi",
-           comment = c(ORCID = "0000-0002-8732-7692")
+           comment = c(ORCID = "0000-0002-8732-7692"))
+Title: Web app for interactive construction and exploration of microbiome data
 Description: What the package does (one paragraph).
 License: Artistic-2.0
 Encoding: UTF-8
