@@ -1,7 +1,7 @@
 # iSEEbug
 
 [![issues](https://img.shields.io/github/issues/RiboRings/iSEEbug)](https://github.com/RiboRings/iSEEbug/issues)
-[![pulls](https://img.shields.io/github/issues-pr/microbiome/iSEEbug)](https://github.com/microbiome/iSEEbug/pulls)
+[![pulls](https://img.shields.io/github/issues-pr/RiboRings/iSEEbug)](https://github.com/RiboRings/iSEEbug/pulls)
 [![R-CMD-check](https://github.com/RiboRings/iSEEbug/workflows/rworkflows/badge.svg)](https://github.com/RiboRings/iSEEbug/actions)
 [![codecov](https://codecov.io/gh/RiboRings/iSEEbug/branch/devel/graph/badge.svg)](https://app.codecov.io/gh/RiboRings/iSEEbug?branch=devel)
 [![codefactor](https://www.codefactor.io/repository/github/RiboRings/iseebug/badge)](https://www.codefactor.io/repository/github/RiboRings/iseebug)
