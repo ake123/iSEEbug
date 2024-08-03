@@ -2,3 +2,5 @@
 data/
 .Rhistory
 .Rproj.user
+docs
+inst/doc
