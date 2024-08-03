@@ -1,4 +1,4 @@
-.render_overview <- function(output, pObjects, rObjects) {
+.render_overview <- function(output, rObjects) {
   
   output$object <- renderPrint({
     rObjects$tse
@@ -8,7 +8,7 @@
 }
 
 
-.render_download <- function(output, pObjects, rObjects) {
+.render_download <- function(output, rObjects) {
   
   output$download <- downloadHandler(
     filename = function() paste0("se-", Sys.Date(), ".rds"),

@@ -1,13 +1,16 @@
-.landing_page <- function() {
+.landing_page <- function(FUN, input, output, session) {
 
-  function (FUN, input, output, session) {
+    mia_datasets <- data(package = "mia")
+    mia_datasets <- mia_datasets$results[-2 , "Item"]
+    data(list = mia_datasets, package = "mia")
+  
     # nocov start
     output$allPanels <- renderUI({
       tagList(
         
         fluidPage(
           
-          titlePanel("SE Builder"),
+          titlePanel("TreeSE Builder"),
           
           sidebarLayout(
             
@@ -68,8 +71,10 @@
                           
               ),
               
-              actionButton("build", "Build!", class = "btn-success"),
-              actionButton("launch", "Launch!", class = "btn-success")
+              actionButton("build", "Build", class = "btn-success",
+                           style = iSEE:::.actionbutton_biocstyle),
+              actionButton("launch", "Launch", class = "btn-success",
+                           style = iSEE:::.actionbutton_biocstyle)
               
             ),
             
@@ -97,22 +102,14 @@
     shinyjs::disable(iSEE:::.generalSessionInfo) # session info
     shinyjs::disable(iSEE:::.generalCitationInfo) # citation info
     
-    pObjects <- .create_persistent_objects()
     rObjects <- reactiveValues(tse = 1L)
     
-    .create_observers(input, session, pObjects, rObjects)
+    .create_observers(input, session, rObjects)
     .create_launch_observers(FUN, input, session, rObjects)
     
-    .render_overview(output, pObjects, rObjects)
-    .render_download(output, pObjects, rObjects)
+    .render_overview(output, rObjects)
+    .render_download(output, rObjects)
 
     invisible(NULL)
     # nocov end
-  }
-}
-
-.create_persistent_objects <- function() {
-  pObjects <- new.env()
-  # pObjects$datasets_visible <- datasets_table
-  pObjects
 }

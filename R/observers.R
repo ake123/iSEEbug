@@ -1,4 +1,4 @@
-.create_observers <- function(input, session, pObjects, rObjects) {
+.create_observers <- function(input, session, rObjects) {
   
   observeEvent(input$build, {
 
@@ -43,7 +43,7 @@
       
     }
 
-  }, ignoreInit = TRUE, ignoreNULL = TRUE)
+  }, ignoreInit = TRUE, ignoreNULL = FALSE)
   
   invisible(NULL)
 }
