@@ -19,6 +19,7 @@ Imports:
     shiny,
     shinyjs,
     SummarizedExperiment,
+    SingleCellExperiment,
     TreeSummarizedExperiment,
     utils
 Suggests:

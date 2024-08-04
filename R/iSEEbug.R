@@ -35,6 +35,10 @@ iSEEbug <- function() {
 #' @importFrom methods is
 #' @importFrom shinyjs enable
 #' @importFrom iSEEtree RowTreePlot AbundancePlot AbundanceDensityPlot
+#' @importFrom TreeSummarizedExperiment rowLinks
+#' @importFrom mia taxonomyRanks
+#' @importFrom SummarizedExperiment rowData colData
+#' @importFrom SingleCellExperiment reducedDims
 .launch_isee <- function(FUN, session, rObjects) {
 
     se <- rObjects$tse
