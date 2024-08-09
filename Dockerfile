@@ -1,5 +1,5 @@
 # Base R Shiny image
-FROM rocker/shiny::latest
+FROM rocker/shiny
 
 # Set the working directory
 WORKDIR /srv/shiny-server
