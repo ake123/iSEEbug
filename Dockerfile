@@ -8,7 +8,7 @@ WORKDIR /srv/shiny-server
 COPY . .
 
 # Install R dependencies from the DESCRIPTION file
-RUN R -e "install.packages(c('remotes', BiocManager'))"
+RUN R -e "install.packages(c('remotes', 'BiocManager'))"
 RUN R -e "remotes::install_local(dependencies = TRUE, upgrade = TRUE)"
 
 # Expose the application port
