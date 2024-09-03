@@ -26,14 +26,14 @@
 
         if( input$format == "dataset" ){
       
-            rObjects$tse <- isolate(get(input$data))
+            rObjects$tse <- isolate(base::get(input$data))
       
         }else if( input$format == "rda" ){
       
             isolate({
                 req(input$file)
                 load(file = input$file$datapath)
-                rObjects$tse <- get(gsub(".rda", "", input$file$name))
+                rObjects$tse <- base::get(gsub(".rda", "", input$file$name))
             })
       
         }else if( input$format == "raw" ){
