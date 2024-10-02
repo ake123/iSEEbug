@@ -1,40 +1,15 @@
-# Base R Shiny image
-FROM rocker/shiny:4.4.0
+FROM bioconductor/bioconductor_docker:devel
 
-# Install system dependencies for GSL and GLPK
-RUN apt-get update && apt-get install -y \
-    libgsl-dev \
-    libglpk-dev
+MAINTAINER giulio.benedetti@utu.fi
+LABEL authors="giulio.benedetti@utu.fi" \
+    description="Docker image containing the iSEEbug package in a bioconductor/bioconductor_docker:devel container."
 
-# Install R dependencies early to leverage Docker layer caching
-RUN R -e "install.packages(c('devtools', 'BiocManager'))"
+WORKDIR /home/rstudio/iseebug
 
-RUN R -e "if (!requireNamespace('BiocManager', quietly = TRUE)) install.packages('BiocManager'); BiocManager::install(version='devel', ask=FALSE); BiocManager::install('iSEEtree')"
+COPY --chown=rstudio:rstudio . /home/rstudio/iseebug
 
-# Install necessary Bioconductor and CRAN packages
-RUN R -e "BiocManager::install(c('iSEE', 'iSEEtree', 'mia', 'biomformat', 'SummarizedExperiment', 'SingleCellExperiment', 'TreeSummarizedExperiment', 'shiny', 'shinyjs', 'methods', 'utils'))"
+RUN apt-get update && apt-get install -y libglpk-dev && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Set the working directory
-WORKDIR /srv/shiny-server
+ENV R_REMOTES_NO_ERRORS_FROM_WARNINGS=true
 
-# Copy the DESCRIPTION file first to leverage Docker cache if dependencies haven't changed
-COPY DESCRIPTION .
-
-# Install the dependencies based on the DESCRIPTION file
-RUN R -e "remotes::install_deps(dependencies = TRUE)"
-
-# Copy the rest of the package code
-COPY . .
-
-# Install the local iSEEbug package and output installation logs for debugging
-RUN R -e "remotes::install_local('.', dependencies = TRUE, upgrade = TRUE, quiet = FALSE)"
-
-# Verify that the iSEEbug package is installed
-
-# Expose the application port
-EXPOSE 8080
-
-# Command to run the Shiny app
-CMD ["R", "-e", "app <- iSEEbug::iSEEbug(); shiny::runApp(app, host = '0.0.0.0', port = 8080)"]
-
-
+RUN Rscript -e "devtools::install('.', dependencies = TRUE, repos = BiocManager::repositories(), build_vignettes = TRUE)"
