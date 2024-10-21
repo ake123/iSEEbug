@@ -27,7 +27,7 @@ iSEEbug <- function() {
 
     iSEE(
         landingPage = .landing_page,
-        appTitle = sprintf("iSEEbug - v%s", packageVersion("iSEEbug"))
+        appTitle = sprintf("TreeSE Builder - v%s", packageVersion("iSEEbug"))
     )
 
 }

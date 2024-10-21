@@ -39,14 +39,24 @@
         }else if( input$format == "raw" ){
       
             isolate({
-                req(input$assay, input$coldata, input$rowdata)
+                req(input$assay)
         
                 assay_list <- lapply(input$assay$datapath,
                     function(x) as.matrix(read.csv(x, row.names = 1)))
                 
-                coldata <- read.csv(input$coldata$datapath, row.names = 1)
-                rowdata <- read.csv(input$rowdata$datapath, row.names = 1)
-        
+                if( !is.null(input$coldata) ){
+                    coldata <- read.csv(input$coldata$datapath, row.names = 1)
+                } else {
+                    coldata <- DataFrame(row.names = colnames(assay_list[[1]]))
+                }
+      
+                
+                if( !is.null(input$rowdata) ){
+                    rowdata <- read.csv(input$rowdata$datapath, row.names = 1)
+                } else {
+                    rowdata <- NULL
+                }
+                
                 names(assay_list) <- gsub(".csv", "", input$assay$name)
         
                 rObjects$tse <- SummarizedExperiment(assays = assay_list,
@@ -54,17 +64,40 @@
             })
       
         }else if( input$format == "foreign" ){
-      
+          
             isolate({
-                req(input$biom)
               
-                biom_object <- read_biom(input$biom$datapath)
-                
-                rObjects$tse <- convertFromBIOM(biom_object,
-                    removeTaxaPrefixes = input$rm.tax.pref,
-                    rankFromPrefix = input$rank.from.pref)
-            })
+                req(input$main.file)
       
+                if( input$ftype == "biom" ){
+              
+                    biom_object <- read_biom(input$main.file$datapath)
+                
+                    rObjects$tse <- convertFromBIOM(biom_object,
+                        removeTaxaPrefixes = input$rm.tax.pref,
+                        rankFromPrefix = input$rank.from.pref)
+              
+                } else if( input$ftype == "MetaPhlAn" ){
+                  
+                    if( !is.null(input$col.data) ){
+                        coldata <- input$col.data$datapath
+                    } else {
+                        coldata <- NULL
+                    }
+                  
+                    if( !is.null(input$tree.file) ){
+                        treefile <- input$tree.file$datapath
+                    } else {
+                        treefile <- NULL
+                    }
+              
+                    rObjects$tse <- importMetaPhlAn(input$main.file$datapath,
+                        col.data = coldata, tree.file = treefile) 
+                 
+                }
+        
+            })
+            
         }
 
     }, ignoreInit = TRUE, ignoreNULL = FALSE)

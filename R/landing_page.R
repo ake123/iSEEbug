@@ -26,12 +26,10 @@
 
         fluidPage(
           
-            titlePanel("TreeSE Builder"),
-          
-            sidebarLayout(
-            
-                sidebarPanel(
+            fluidRow(column(4, wellPanel(
               
+              titlePanel("Import"),
+            
                     tabsetPanel(id = "format",
                           
                         tabPanel(title = "Dataset", value = "dataset",
@@ -63,35 +61,82 @@
                          ),
                           
                          tabPanel(title = "Foreign", value = "foreign",
-                                   
-                             fileInput(inputId = "biom", label = "BIOM:",
-                                 accept = ".biom"),
-                                   
-                             checkboxInput(inputId = "rm.tax.pref",
-                                 label = "Remove taxa prefixes"),
-                                   
-                             checkboxInput(inputId = "rank.from.pref",
-                                 label = "Derive taxa from prefixes")
+                                  
+                             radioButtons(inputId = "ftype",
+                                 label = "Type:", choices = list("biom", "QZA",
+                                 "MetaPhlAn")),
+                             
+                             fileInput(inputId = "main.file",
+                                 label = "Main file:", accept = c(".biom",
+                                 ".QZA", ".txt")),
+                             
+                             conditionalPanel(
+                                 condition = "input.ftype == 'biom'",
+                               
+                                 checkboxInput(inputId = "rm.tax.pref",
+                                     label = "Remove taxa prefixes"),
+                               
+                                 checkboxInput(inputId = "rank.from.pref",
+                                     label = "Derive taxa from prefixes")
+                             ),
+                             
+                             conditionalPanel(
+                                 condition = "input.ftype == 'MetaPhlAn'",
+                               
+                                 fileInput(inputId = "col.data", label = "colData:",
+                                     accept = ".tsv"),
+                                 
+                                 fileInput(inputId = "tree.file", label = "Tree:",
+                                     accept = ".tree")
+                             )
                                    
                           )
                           
-                      ),
-              
-                      actionButton("build", "Build", class = "btn-success",
-                          style = iSEE:::.actionbutton_biocstyle),
-                      actionButton("launch", "Launch", class = "btn-success",
-                          style = iSEE:::.actionbutton_biocstyle)
-              
-                  ),
+                      ))),
             
-                  mainPanel(
+            column(4, wellPanel(
               
-                      verbatimTextOutput(outputId = "object"),
+              titlePanel("Manipulate"),
               
-                      downloadButton(outputId = "download", label = "Download")
-    
-                  )
-              )
+              textInput("left_input", "Left Input:")
+            
+            )),
+            
+            column(4, wellPanel(
+              
+              titlePanel("Transform"),
+              
+              textInput("left_input", "Left Input:")
+              
+            ))),
+  
+            fluidRow(
+              
+              column(4, wellPanel(
+                
+                titlePanel("Estimate"),
+                
+                textInput("left_input", "Left Input:")
+                
+              )),
+              
+              column(8, wellPanel(
+              
+              titlePanel("Output"),
+              
+              actionButton("build", "Build", class = "btn-success",
+                  style = paste0(iSEE:::.actionbutton_biocstyle,
+                  "; margin-bottom: 20px")),
+                  
+              actionButton("launch", "Launch", class = "btn-success",
+                  style = paste0(iSEE:::.actionbutton_biocstyle,
+                  "; margin-bottom: 20px")),
+              
+              verbatimTextOutput(outputId = "object"),
+              
+              downloadButton(outputId = "download", label = "Download")
+              
+            )))
           )
     })
     
