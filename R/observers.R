@@ -103,10 +103,30 @@
   
     observeEvent(input$apply, {
       
-        if( input$manipulate == "transform" ){
+        if( input$manipulate == "subset" ){
+          
+            isolate({
+            
+              # subsetByPrevalent
+              # subsetByRare
+              
+            })
+          
+        }
+      
+        else if( input$manipulate == "aggregate" ){
+          
+            isolate({
+                
+                rObjects$tse <- agglomerateByRank(rObjects$tse,
+                    rank = input$taxrank)
+              
+            })
+          
+        } else if( input$manipulate == "transform" ){
 
-        isolate({
-            req(input$assay.type)
+            isolate({
+                req(input$assay.type)
               
                 if( mia:::.is_non_empty_string(input$assay.name) ){
                     name <- input$assay.name
@@ -131,7 +151,12 @@
           updateSelectInput(session, inputId = "assay.type",
               choices = assayNames(rObjects$tse))
         
-    }})
+          updateSelectInput(session, inputId = "taxrank",
+              choices = taxonomyRanks(rObjects$tse))
+        
+      }
+    
+    })
   
     invisible(NULL)
 }

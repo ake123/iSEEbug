@@ -106,7 +106,13 @@
               tabsetPanel(id = "manipulate",
                           
                   tabPanel(title = "Subset", value = "subset"),
-                  tabPanel(title = "Aggregate", value = "aggregate"),
+                  tabPanel(title = "Aggregate", value = "aggregate",
+                  
+                      selectInput(inputId = "taxrank", label = "Taxonomic rank:",
+                          choices = NULL)         
+                        
+                  ),
+                  
                   tabPanel(title = "Transform", value = "transform",
                   
                       selectInput(inputId = "assay.type", label = "Assay:",
@@ -116,7 +122,7 @@
                           choices = c("relabundance", "clr", "standardize")),
               
                       checkboxInput(inputId = "pseudocount",
-                          label = "Pseudocount:"),
+                          label = "Pseudocount"),
               
                       textInput(inputId = "assay.name", label = "Name:"),
                       
