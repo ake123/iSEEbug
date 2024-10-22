@@ -92,21 +92,50 @@
                                    
                           )
                           
-                      ))),
+                      ),
+              
+                  actionButton("import", "Import", class = "btn-success",
+                      style = iSEE:::.actionbutton_biocstyle)
+                
+                )),
             
             column(4, wellPanel(
               
               titlePanel("Manipulate"),
               
-              textInput("left_input", "Left Input:")
+              tabsetPanel(id = "manipulate",
+                          
+                  tabPanel(title = "Subset", value = "subset"),
+                  tabPanel(title = "Aggregate", value = "aggregate"),
+                  tabPanel(title = "Transform", value = "transform",
+                  
+                      selectInput(inputId = "assay.type", label = "Assay:",
+                          choices = NULL),
+              
+                      selectInput(inputId = "trans.method", label = "Method:",
+                          choices = c("relabundance", "clr", "standardize")),
+              
+                      checkboxInput(inputId = "pseudocount",
+                          label = "Pseudocount:"),
+              
+                      textInput(inputId = "assay.name", label = "Name:"),
+                      
+                      radioButtons(inputId = "margin", label = "Margin:",
+                          choices = c("samples", "features"), inline = TRUE)
+                  
+              )),
+              
+              actionButton("apply", "Apply", class = "btn-success",
+                  style = iSEE:::.actionbutton_biocstyle)
             
             )),
             
             column(4, wellPanel(
               
-              titlePanel("Transform"),
+              titlePanel("Estimate"),
               
-              textInput("left_input", "Left Input:")
+              actionButton("estimate", "Estimate", class = "btn-success",
+                  style = iSEE:::.actionbutton_biocstyle)
               
             ))),
   
@@ -114,23 +143,16 @@
               
               column(4, wellPanel(
                 
-                titlePanel("Estimate"),
-                
-                textInput("left_input", "Left Input:")
+                titlePanel("Visualise"),
+
+                actionButton("launch", "Launch iSEE", class = "btn-success",
+                    style = iSEE:::.actionbutton_biocstyle)
                 
               )),
               
               column(8, wellPanel(
               
               titlePanel("Output"),
-              
-              actionButton("build", "Build", class = "btn-success",
-                  style = paste0(iSEE:::.actionbutton_biocstyle,
-                  "; margin-bottom: 20px")),
-                  
-              actionButton("launch", "Launch", class = "btn-success",
-                  style = paste0(iSEE:::.actionbutton_biocstyle,
-                  "; margin-bottom: 20px")),
               
               verbatimTextOutput(outputId = "object"),
               

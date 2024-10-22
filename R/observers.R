@@ -22,8 +22,8 @@
 #' @importFrom SummarizedExperiment SummarizedExperiment
 .create_observers <- function(input, session, rObjects) {
   
-    observeEvent(input$build, {
-
+    observeEvent(input$import, {
+      
         if( input$format == "dataset" ){
       
             rObjects$tse <- isolate(base::get(input$data))
@@ -66,7 +66,6 @@
         }else if( input$format == "foreign" ){
           
             isolate({
-              
                 req(input$main.file)
       
                 if( input$ftype == "biom" ){
@@ -99,8 +98,40 @@
             })
             
         }
-
+      
     }, ignoreInit = TRUE, ignoreNULL = FALSE)
+  
+    observeEvent(input$apply, {
+      
+        if( input$manipulate == "transform" ){
+
+        isolate({
+            req(input$assay.type)
+              
+                if( mia:::.is_non_empty_string(input$assay.name) ){
+                    name <- input$assay.name
+                } else {
+                    name <- input$trans.method
+                }
+
+                rObjects$tse <- transformAssay(rObjects$tse, name = name,
+                    assay.type = input$assay.type, method = input$trans.method,
+                    pseudocount = input$pseudocount, MARGIN = input$margin)
+            
+            })
+          
+        }
+      
+    }, ignoreInit = TRUE, ignoreNULL = FALSE)
+    
+    observe({
+      
+      if( isS4(rObjects$tse) ){
+        
+          updateSelectInput(session, inputId = "assay.type",
+              choices = assayNames(rObjects$tse))
+        
+    }})
   
     invisible(NULL)
 }
