@@ -16,12 +16,14 @@ Imports:
     iSEEtree,
     methods,
     mia,
+    scater,
     shiny,
     shinyjs,
     SummarizedExperiment,
     SingleCellExperiment,
     TreeSummarizedExperiment,
-    utils
+    utils,
+    vegan
 Suggests:
     BiocStyle,
     knitr,
