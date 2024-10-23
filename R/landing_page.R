@@ -239,7 +239,11 @@
     
     rObjects <- reactiveValues(tse = 1L)
     
-    .create_observers(input, session, rObjects)
+    .create_import_observers(input, rObjects)
+    .create_manipulate_observers(input, rObjects)
+    .create_estimate_observers(input, rObjects)
+    .update_observers(input, session, rObjects)
+
     .create_launch_observers(FUN, input, session, rObjects)
     
     .render_overview(output, rObjects)

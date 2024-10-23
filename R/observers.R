@@ -18,9 +18,9 @@
 #' @rdname create_observers
 #' @importFrom shiny isolate observeEvent req
 #' @importFrom biomformat read_biom
-#' @importFrom mia convertFromBIOM
-#' @importFrom SummarizedExperiment SummarizedExperiment
-.create_observers <- function(input, session, rObjects) {
+#' @importFrom mia convertFromBIOM importMetaPhlAn
+#' @importFrom TreeSummarizedExperiment TreeSummarizedExperiment
+.create_import_observers <- function(input, rObjects) {
   
     observeEvent(input$import, {
       
@@ -59,7 +59,7 @@
                 
                 names(assay_list) <- gsub(".csv", "", input$assay$name)
         
-                rObjects$tse <- SummarizedExperiment(assays = assay_list,
+                rObjects$tse <- TreeSummarizedExperiment(assays = assay_list,
                     colData = coldata, rowData = rowdata)
             })
       
@@ -100,6 +100,15 @@
         }
       
     }, ignoreInit = TRUE, ignoreNULL = FALSE)
+  
+    invisible(NULL)
+}
+
+#' @rdname create_observers
+#' @importFrom shiny isolate observeEvent req
+#' @importFrom mia subsetByPrevalent subsetByRare agglomerateByRank
+#'   transformAssay
+.create_manipulate_observers <- function(input, rObjects) {
   
     observeEvent(input$apply, {
       
@@ -151,7 +160,17 @@
         }
       
     }, ignoreInit = TRUE, ignoreNULL = FALSE)
-    
+  
+    invisible(NULL)
+}
+
+#' @rdname create_observers
+#' @importFrom shiny isolate observeEvent req
+#' @importFrom mia addAlpha runNMDS runRDA getDissimilarity
+#' @importFrom scater runMDS runPCA
+#' @importFrom vegan vegdist
+.create_estimate_observers <- function(input, rObjects) {
+  
     observeEvent(input$compute, {
       
         if( input$estimate == "alpha" ){
@@ -192,7 +211,7 @@
                     
                 } else if( input$bmethod %in% c("MDS", "NMDS") ){
                   
-                    beta_args <- c(beta_args, FUN = vegan::vegdist,
+                    beta_args <- c(beta_args, FUN = vegdist,
                         method = input$beta.index)
                     
                 } else if( input$bmethod == "RDA" ){
@@ -209,7 +228,16 @@
         }
         
     }, ignoreInit = TRUE, ignoreNULL = FALSE)
-    
+  
+    invisible(NULL)
+}
+
+#' @rdname create_observers
+#' @importFrom shiny updateSelectInput updateNumericInput observe
+#' @importFrom SummarizedExperiment assayNames
+#' @importFrom mia taxonomyRanks
+.update_observers <- function(input, session, rObjects){
+  
     observe({
       
       if( isS4(rObjects$tse) ){
@@ -235,7 +263,7 @@
       }
     
     })
-  
+    
     invisible(NULL)
 }
 

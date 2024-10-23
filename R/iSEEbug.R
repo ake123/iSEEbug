@@ -36,8 +36,7 @@ iSEEbug <- function() {
 #' @importFrom shinyjs enable
 #' @importFrom iSEE RowDataTable ColumnDataTable ReducedDimensionPlot
 #'   ComplexHeatmapPlot
-#' @importFrom iSEEtree RowTreePlot ColumnTreePlot AbundancePlot RDAPlot
-#'   LoadingPlot AbundanceDensityPlot
+#' @importFrom iSEEtree RowTreePlot AbundancePlot RDAPlot AbundanceDensityPlot
 #' @importFrom TreeSummarizedExperiment rowLinks
 #' @importFrom mia taxonomyRanks
 #' @importFrom SummarizedExperiment rowData colData

@@ -2,11 +2,20 @@
 % Please edit documentation in R/observers.R
 \name{create_observers}
 \alias{create_observers}
-\alias{.create_observers}
+\alias{.create_import_observers}
+\alias{.create_manipulate_observers}
+\alias{.create_estimate_observers}
+\alias{.update_observers}
 \alias{.create_launch_observers}
 \title{Observers}
 \usage{
-.create_observers(input, session, rObjects)
+.create_import_observers(input, rObjects)
+
+.create_manipulate_observers(input, rObjects)
+
+.create_estimate_observers(input, rObjects)
+
+.update_observers(input, session, rObjects)
 
 .create_launch_observers(FUN, input, session, rObjects)
 }
