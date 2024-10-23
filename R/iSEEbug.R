@@ -36,41 +36,34 @@ iSEEbug <- function() {
 #' @importFrom shinyjs enable
 #' @importFrom iSEE RowDataTable ColumnDataTable ReducedDimensionPlot
 #'   ComplexHeatmapPlot
-#' @importFrom iSEEtree RowTreePlot AbundancePlot AbundanceDensityPlot
+#' @importFrom iSEEtree RowTreePlot ColumnTreePlot AbundancePlot RDAPlot
+#'   LoadingPlot AbundanceDensityPlot
 #' @importFrom TreeSummarizedExperiment rowLinks
 #' @importFrom mia taxonomyRanks
 #' @importFrom SummarizedExperiment rowData colData
 #' @importFrom SingleCellExperiment reducedDims
-.launch_isee <- function(FUN, session, rObjects) {
+.launch_isee <- function(FUN, initial, session, rObjects) {
 
-    se <- rObjects$tse
+    tse <- rObjects$tse
   
-    if( is(se, "TreeSummarizedExperiment") ){
+    initial <- lapply(initial, function(x) eval(parse(text = paste0(x, "()"))))
     
-    initial <- c(RowDataTable(), ColumnDataTable(), RowTreePlot(),
-                 AbundancePlot(), AbundanceDensityPlot(),
-                 ReducedDimensionPlot(), ComplexHeatmapPlot())
-    
-    initial <- iSEEtree:::.check_panel(se, initial, "RowDataTable", rowData)
-    initial <- iSEEtree:::.check_panel(se, initial, "ColumnDataTable", colData)
-    initial <- iSEEtree:::.check_panel(se, initial, "RowTreePlot", rowLinks)
-    initial <- iSEEtree:::.check_panel(se, initial, "AbundancePlot", taxonomyRanks)
-    initial <- iSEEtree:::.check_panel(se, initial, "ReducedDimensionPlot", reducedDims)
-    
-    } else {
-        initial <- NULL
-    }
+    initial <- iSEEtree:::.check_panel(tse, initial, "RowDataTable", rowData)
+    initial <- iSEEtree:::.check_panel(tse, initial, "ColumnDataTable", colData)
+    initial <- iSEEtree:::.check_panel(tse, initial, "RowTreePlot", rowLinks)
+    initial <- iSEEtree:::.check_panel(tse, initial, "AbundancePlot", taxonomyRanks)
+    initial <- iSEEtree:::.check_panel(tse, initial, "ReducedDimensionPlot", reducedDims)
   
-    FUN(SE = se, INIT = initial)#, EXTRA = initial)
+    FUN(SE = tse, INIT = initial)#, EXTRA = initial)
   
     enable(iSEE:::.generalOrganizePanels) # organize panels
-    enable(iSEE:::.generalLinkGraph) # link graph
-    enable(iSEE:::.generalExportOutput) # export content
-    enable(iSEE:::.generalCodeTracker) # tracked code
-    enable(iSEE:::.generalPanelSettings) # panel settings
-    enable(iSEE:::.generalVignetteOpen) # open vignette
-    enable(iSEE:::.generalSessionInfo) # session info
-    enable(iSEE:::.generalCitationInfo) # citation info
+    enable(iSEE:::.generalLinkGraph)      # link graph
+    enable(iSEE:::.generalExportOutput)   # export content
+    enable(iSEE:::.generalCodeTracker)    # tracked code
+    enable(iSEE:::.generalPanelSettings)  # panel settings
+    enable(iSEE:::.generalVignetteOpen)   # open vignette
+    enable(iSEE:::.generalSessionInfo)    # session info
+    enable(iSEE:::.generalCitationInfo)   # citation info
   
     invisible(NULL)
 }

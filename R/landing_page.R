@@ -18,7 +18,7 @@
 .landing_page <- function(FUN, input, output, session) {
 
     mia_datasets <- data(package = "mia")
-    mia_datasets <- mia_datasets$results[-2 , "Item"]
+    mia_datasets <- mia_datasets$results[-c(2, 5), "Item"]
     data(list = mia_datasets, package = "mia")
   
     # nocov start
@@ -94,7 +94,7 @@
                           
                       ),
               
-                  actionButton("import", "Import", class = "btn-success",
+                  actionButton("import", "Build", class = "btn-success",
                       style = iSEE:::.actionbutton_biocstyle)
                 
                 )),
@@ -105,7 +105,23 @@
               
               tabsetPanel(id = "manipulate",
                           
-                  tabPanel(title = "Subset", value = "subset"),
+                  tabPanel(title = "Subset", value = "subset",
+                      
+                      radioButtons(inputId = "subkeep", label = "Keep:",
+                          choices = c("prevalent", "rare"), inline = TRUE),
+                      
+                      selectInput(inputId = "subassay", label = "Assay:",
+                          choices = NULL),
+                      
+                      sliderInput(inputId = "prevalence", value = 0,
+                          label = "Prevalence threshold:", step = 0.01,
+                          min = 0, max = 1),
+                      
+                      numericInput(inputId = "detection", value = 0,
+                          label = "Detection threshold:", min = 0, step = 1)
+                           
+                  ),
+                  
                   tabPanel(title = "Aggregate", value = "aggregate",
                   
                       selectInput(inputId = "taxrank", label = "Taxonomic rank:",
@@ -140,7 +156,46 @@
               
               titlePanel("Estimate"),
               
-              actionButton("estimate", "Estimate", class = "btn-success",
+              tabsetPanel(id = "estimate",
+                          
+                  tabPanel(title = "Alpha", value = "alpha",
+                           
+                      selectInput(inputId = "alpha.assay", label = "Assay:",
+                          choices = NULL),
+                      
+                      selectInput(inputId = "alpha.index", label = "Metric:",
+                          choices = c("coverage", "shannon", "faith"),
+                          multiple = TRUE),
+                      
+                      textInput(inputId = "alpha.name", label = "Name:")
+                           
+                  ),
+                  
+                  tabPanel(title = "Beta", value = "beta",
+                           
+                      selectInput(inputId = "beta.assay", label = "Assay:",
+                          choices = NULL),
+                      
+                      selectInput(inputId = "bmethod", label = "Method:",
+                          choices = c("MDS", "NMDS", "PCA", "RDA")),
+                      
+                      conditionalPanel(
+                          condition = "input.bmethod != 'PCA'",
+                        
+                          selectInput(inputId = "beta.index", label = "Metric:",
+                              choices = c("euclidean", "bray", "jaccard", "unifrac")),
+                      ),
+                      
+                      numericInput(inputId = "ncomponents", value = 2,
+                          label = "Number of components:", min = 1, step = 1),
+                      
+                      textInput(inputId = "beta.name", label = "Name:")
+                                  
+                  )
+                  
+              ),
+              
+              actionButton("compute", "Compute", class = "btn-success",
                   style = iSEE:::.actionbutton_biocstyle)
               
             ))),
@@ -150,7 +205,11 @@
               column(4, wellPanel(
                 
                 titlePanel("Visualise"),
-
+                
+                selectInput(inputId = "panels", label = "Panels:",
+                    choices = c(default_panels, other_panels),
+                    multiple = TRUE, selected = c(default_panels)),
+                
                 actionButton("launch", "Launch iSEE", class = "btn-success",
                     style = iSEE:::.actionbutton_biocstyle)
                 
@@ -189,3 +248,10 @@
     invisible(NULL)
     # nocov end
 }
+
+default_panels <- c("RowDataTable", "ColumnDataTable", "RowTreePlot",
+                    "AbundancePlot", "AbundanceDensityPlot", "ReducedDimensionPlot",
+                    "ComplexHeatmapPlot")
+
+other_panels <- c("LoadingPlot", "ColumnTreePlot", "RDAPlot", "ColumnDataPlot",
+                  "RowDataPlot")

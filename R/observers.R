@@ -26,7 +26,7 @@
       
         if( input$format == "dataset" ){
       
-            rObjects$tse <- isolate(base::get(input$data))
+            rObjects$tse <- isolate(get(input$data))
       
         }else if( input$format == "rda" ){
       
@@ -106,9 +106,17 @@
         if( input$manipulate == "subset" ){
           
             isolate({
+                req(input$subassay)
+              
+                if( input$subkeep == "prevalent" ){
+                    subset_fun <- subsetByPrevalent
+                } else if( input$subkeep == "rare" ){
+                  subset_fun <- subsetByRare
+                }
             
-              # subsetByPrevalent
-              # subsetByRare
+                rObjects$tse <- subset_fun(rObjects$tse,
+                    assay.type = input$subassay, prevalence = input$prevalence,
+                    detection = input$detection)
               
             })
           
@@ -144,15 +152,85 @@
       
     }, ignoreInit = TRUE, ignoreNULL = FALSE)
     
+    observeEvent(input$compute, {
+      
+        if( input$estimate == "alpha" ){
+        
+            isolate({
+                req(input$alpha.assay)
+          
+                if( mia:::.is_non_empty_string(input$alpha.name) ){
+                    name <- input$alpha.name
+                } else {
+                    name <- input$alpha.index
+                }
+          
+                rObjects$tse <- addAlpha(rObjects$tse, name = name,
+                    assay.type = input$alpha.assay, index = input$alpha.index)
+          
+            })
+        
+        } else if( input$estimate == "beta" ){
+          
+            isolate({
+                req(input$beta.assay)
+              
+                if( mia:::.is_non_empty_string(input$beta.name) ){
+                    name <- input$beta.name
+                } else {
+                    name <- input$beta.index
+                }
+              
+                beta_args <- list(x = rObjects$tse, assay.type = input$assay.type,
+                    ncomponents = input$ncomponents, name = name)
+              
+                if( input$beta.index == "unifrac" ){
+                  
+                    beta_args <- c(beta_args, FUN = getDissimilarity,
+                        tree = rowTree(rObjects$tse), ntop = nrow(rObjects$tse),
+                        method = input$beta.index)
+                    
+                } else if( input$bmethod %in% c("MDS", "NMDS") ){
+                  
+                    beta_args <- c(beta_args, FUN = vegan::vegdist,
+                        method = input$beta.index)
+                    
+                } else if( input$bmethod == "RDA" ){
+                  
+                    beta_args <- c(beta_args, formula = "")
+                  
+                }
+              
+                beta_fun <- eval(parse(text = paste0("run", "MDS")))
+                rObjects$tse <- do.call(beta_fun, beta_args)
+              
+            })
+        
+        }
+        
+    }, ignoreInit = TRUE, ignoreNULL = FALSE)
+    
     observe({
       
       if( isS4(rObjects$tse) ){
         
-          updateSelectInput(session, inputId = "assay.type",
+          updateSelectInput(session, inputId = "subassay",
               choices = assayNames(rObjects$tse))
         
           updateSelectInput(session, inputId = "taxrank",
               choices = taxonomyRanks(rObjects$tse))
+          
+          updateSelectInput(session, inputId = "assay.type",
+              choices = assayNames(rObjects$tse))
+          
+          updateSelectInput(session, inputId = "alpha.assay",
+              choices = assayNames(rObjects$tse))
+          
+          updateSelectInput(session, inputId = "beta.assay",
+              choices = assayNames(rObjects$tse))
+          
+          updateNumericInput(session, inputId = "ncomponents",
+              max = nrow(rObjects$tse) - 1)
         
       }
     
@@ -167,7 +245,7 @@
   
     observeEvent(input$launch, {
     
-        .launch_isee(FUN, session, rObjects)
+        .launch_isee(FUN, input$panels, session, rObjects)
 
     }, ignoreInit = TRUE, ignoreNULL = TRUE)
   
