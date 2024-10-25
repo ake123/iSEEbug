@@ -6,9 +6,14 @@
 [![codecov](https://codecov.io/gh/RiboRings/miaDash/branch/devel/graph/badge.svg)](https://app.codecov.io/gh/RiboRings/miaDash?branch=devel)
 [![codefactor](https://www.codefactor.io/repository/github/RiboRings/miadash/badge)](https://www.codefactor.io/repository/github/RiboRings/miadash)
 
-The goal of miaDash is to provide a user-friendly interface to import, build,
-explore and visualise TreeSummarizedExperiment objects by means of
-[_iSEE_](https://isee.github.io/).
+The goal of miaDash is to provide a user-friendly interface to import,
+manipulate, analyse and visualise TreeSummarizedExperiment objects.
+
+## Usage
+miaDash is available online at [this address](iseebug-iseebug.2.rahtiapp.fi/).
+While suitable for small and medium datasets, the online version may slow down
+when larger datasets are analysed (< 1000 features). In this case, the app can
+be installed and run locally. Either way, the app also provides functionality to subset and agglomerate the data.
 
 ## Installation instructions
 The devel version of miaDash can be installed from GitHub as follows:
@@ -25,7 +30,7 @@ library(miaDash)
 
 app <- miaDash()
 
-# Launch iSEE
+# Launch miaDash
 if (interactive()) {
   shiny::runApp(app)
 }
@@ -40,24 +45,10 @@ contributor guidelines of the miaverse
 [here](https://github.com/microbiome/mia/blob/devel/CONTRIBUTING.md).
 
 ## Acknowledgements
-Please note that miaDash was only made possible thanks to many other R and
-bioinformatics software authors, which are cited in the vignettes describing
-this package.
+miaDash results from the joint effort of the larger R/Bioconductor community. In
+particular, this software mainly depends on the following packages:
 
-This package was developed using the following resources:
-
-- [_usethis_](https://cran.r-project.org/web/packages/usethis/) to generate an
-  initial template.
-- Continuous code testing is performed on
-  [GitHub actions](https://github.com/features/actions) and include R CMD check,
-  [_BiocCheck_](https://bioconductor.org/packages/3.16/bioc/html/BiocCheck.html)
-  and testthat.
-- Code coverage assessment is possible thanks to
-  [codecov](https://app.codecov.io/gh/).
-- The documentation website is automatically updated thanks to
-  [_pkgdown_](https://cran.r-project.org/web/packages/pkgdown/).
-- The documentation is formatted thanks to
-  [_devtools_](https://cran.r-project.org/web/packages/devtools/) and
-  [_roxygen2_](https://cran.r-project.org/web/packages/roxygen2/).
-- All the actions above are made reproducible by
-  [_rworkflows_](https://neurogenomics.github.io/rworkflows/)
+- [_mia_](https://bioconductor.org/packages/release/bioc/html/mia.html)
+- [_iSEEtree_](https://bioconductor.org/packages/devel/bioc/html/iSEEtree.html)
+- [_iSEE_](https://isee.github.io/)
+- [_shiny_](https://cran.r-project.org/web/packages/shiny/)
