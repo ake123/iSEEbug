@@ -2,7 +2,7 @@ FROM ghcr.io/riborings/iseebug:devel
 
 MAINTAINER giulio.benedetti@utu.fi
 LABEL authors="giulio.benedetti@utu.fi" \
-    description="Docker image containing the iSEEbug package."
+    description="Docker image containing the miaDash package."
 
 # Set the working directory to /app
 WORKDIR /app
