@@ -1,6 +1,6 @@
-#' iSEEbug
+#' miaDash
 #'
-#' iSEEbug is a web app that provides an interface to build and explore
+#' miaDash is a web app that provides an interface to build and explore
 #' \code{\link[TreeSummarizedExperiment:TreeSummarizedExperiment-constructor]{TreeSummarizedExperiment}}
 #' (TreeSE) objects by means of \link[iSEE:iSEE]{iSEE}.
 #'
@@ -8,7 +8,7 @@
 #'   build TreeSE objects and explore \link[mia:mia-datasets]{mia datasets}.
 #'
 #' @examples
-#' app <- iSEEbug()
+#' app <- miaDash()
 #'
 #' if (interactive()) {
 #'   shiny::runApp(app)
@@ -17,17 +17,17 @@
 #' @seealso \link[iSEE:iSEE]{iSEE} \link[mia:mia]{mia}
 #'   \link[miaViz:miaViz]{miaViz}
 #'
-#' @name iSEEbug
+#' @name miaDash
 
 #' @export
-#' @rdname iSEEbug
+#' @rdname miaDash
 #' @importFrom iSEE iSEE
 #' @importFrom utils packageVersion
-iSEEbug <- function() {
+miaDash <- function() {
 
     iSEE(
         landingPage = .landing_page,
-        appTitle = sprintf("TreeSE Builder - v%s", packageVersion("iSEEbug"))
+        appTitle = sprintf("miaDash - v%s", packageVersion("miaDash"))
     )
 
 }

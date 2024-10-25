@@ -1,4 +1,4 @@
-Package: iSEEbug
+Package: miaDash
 Version: 0.1.0
 Authors@R: 
     person(given = "Giulio", family = "Benedetti", role = c("aut", "cre"),

@@ -1,6 +1,6 @@
 #' Landing page
 #' 
-#' \code{.landing_page} creates the landing page of iSEEhub, where TreeSE objects
+#' \code{.landing_page} creates the landing page of miaDash, where TreeSE objects
 #' can be built and iSEE can be launched.
 #'
 #' @return The UI is defined by the function. A \code{NULL} value is invisibly
@@ -40,10 +40,10 @@
                                    
                         ),
                           
-                        tabPanel(title = "R Object", value = "rda",
+                        tabPanel(title = "R Object", value = "rds",
                                    
-                            fileInput(inputId = "file", label = "RDA:",
-                                accept = ".rda")
+                            fileInput(inputId = "file", label = "RDS:",
+                                accept = ".rds")
                                    
                         ),
                           
@@ -122,7 +122,7 @@
                            
                   ),
                   
-                  tabPanel(title = "Aggregate", value = "aggregate",
+                  tabPanel(title = "Agglomerate", value = "agglomerate",
                   
                       selectInput(inputId = "taxrank", label = "Taxonomic rank:",
                           choices = NULL)         
@@ -173,11 +173,12 @@
                   
                   tabPanel(title = "Beta", value = "beta",
                            
+                      radioButtons(inputId = "bmethod", label = "Method:",
+                          choices = c("MDS", "NMDS", "PCA", "RDA"), inline = TRUE),
+                         
+                           
                       selectInput(inputId = "beta.assay", label = "Assay:",
                           choices = NULL),
-                      
-                      selectInput(inputId = "bmethod", label = "Method:",
-                          choices = c("MDS", "NMDS", "PCA", "RDA")),
                       
                       conditionalPanel(
                           condition = "input.bmethod != 'PCA'",
@@ -186,7 +187,14 @@
                               choices = c("euclidean", "bray", "jaccard", "unifrac")),
                       ),
                       
-                      numericInput(inputId = "ncomponents", value = 2,
+                      conditionalPanel(
+                          condition = "input.bmethod == 'RDA'",
+                        
+                          textInput(inputId = "rda.formula", label = "Formula:",
+                              placeholder = "data ~ var1 + var2 * var3"),
+                      ),
+                      
+                      numericInput(inputId = "ncomponents", value = 5,
                           label = "Number of components:", min = 1, step = 1),
                       
                       textInput(inputId = "beta.name", label = "Name:")

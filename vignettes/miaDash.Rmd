@@ -1,8 +1,8 @@
 ---
-title: "iSEEbug"
+title: "miaDash"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{iSEEbug}
+  %\VignetteIndexEntry{miaDash}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -15,5 +15,5 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(iSEEbug)
+library(miaDash)
 ```

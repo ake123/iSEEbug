@@ -28,12 +28,12 @@
       
             rObjects$tse <- isolate(get(input$data))
       
-        }else if( input$format == "rda" ){
+        }else if( input$format == "rds" ){
       
             isolate({
                 req(input$file)
                 load(file = input$file$datapath)
-                rObjects$tse <- base::get(gsub(".rda", "", input$file$name))
+                rObjects$tse <- readRDS(gsub(".rds", "", input$file$name))
             })
       
         }else if( input$format == "raw" ){
@@ -131,7 +131,7 @@
           
         }
       
-        else if( input$manipulate == "aggregate" ){
+        else if( input$manipulate == "agglomerate" ){
           
             isolate({
                 
@@ -197,7 +197,7 @@
                 if( mia:::.is_non_empty_string(input$beta.name) ){
                     name <- input$beta.name
                 } else {
-                    name <- input$beta.index
+                    name <- input$bmethod
                 }
               
                 beta_args <- list(x = rObjects$tse, assay.type = input$assay.type,
@@ -216,11 +216,12 @@
                     
                 } else if( input$bmethod == "RDA" ){
                   
-                    beta_args <- c(beta_args, formula = "")
+                    beta_args <- c(beta_args,
+                        formula = as.formula(input$rda.formula))
                   
                 }
               
-                beta_fun <- eval(parse(text = paste0("run", "MDS")))
+                beta_fun <- eval(parse(text = paste0("run", input$bmethod)))
                 rObjects$tse <- do.call(beta_fun, beta_args)
               
             })

@@ -1,29 +1,29 @@
-# iSEEbug
+# miaDash
 
-[![issues](https://img.shields.io/github/issues/RiboRings/iSEEbug)](https://github.com/RiboRings/iSEEbug/issues)
-[![pulls](https://img.shields.io/github/issues-pr/RiboRings/iSEEbug)](https://github.com/RiboRings/iSEEbug/pulls)
-[![R-CMD-check](https://github.com/RiboRings/iSEEbug/workflows/rworkflows/badge.svg)](https://github.com/RiboRings/iSEEbug/actions)
-[![codecov](https://codecov.io/gh/RiboRings/iSEEbug/branch/devel/graph/badge.svg)](https://app.codecov.io/gh/RiboRings/iSEEbug?branch=devel)
-[![codefactor](https://www.codefactor.io/repository/github/RiboRings/iseebug/badge)](https://www.codefactor.io/repository/github/RiboRings/iseebug)
+[![issues](https://img.shields.io/github/issues/RiboRings/miaDash)](https://github.com/RiboRings/miaDash/issues)
+[![pulls](https://img.shields.io/github/issues-pr/RiboRings/miaDash)](https://github.com/RiboRings/miaDash/pulls)
+[![R-CMD-check](https://github.com/RiboRings/miaDash/workflows/rworkflows/badge.svg)](https://github.com/RiboRings/miaDash/actions)
+[![codecov](https://codecov.io/gh/RiboRings/miaDash/branch/devel/graph/badge.svg)](https://app.codecov.io/gh/RiboRings/miaDash?branch=devel)
+[![codefactor](https://www.codefactor.io/repository/github/RiboRings/miadash/badge)](https://www.codefactor.io/repository/github/RiboRings/miadash)
 
-The goal of iSEEbug is to provide a user-friendly interface to import, build,
+The goal of miaDash is to provide a user-friendly interface to import, build,
 explore and visualise TreeSummarizedExperiment objects by means of
 [_iSEE_](https://isee.github.io/).
 
 ## Installation instructions
-The devel version of iSEEbug can be installed from GitHub as follows:
+The devel version of miaDash can be installed from GitHub as follows:
 
 ```
-remotes::install_github("RiboRings/iSEEbug")
+remotes::install_github("RiboRings/miaDash")
 ```
 
 ## Example
-The basic functionality of iSEEbug can be explored as follows:
+The basic functionality of miaDash can be explored as follows:
 
 ```
-library(iSEEbug)
+library(miaDash)
 
-app <- iSEEbug()
+app <- miaDash()
 
 # Launch iSEE
 if (interactive()) {
@@ -32,7 +32,7 @@ if (interactive()) {
 ```
 
 ## Code of Conduct
-Please note that the iSEEbug project is released with a
+Please note that the miaDash project is released with a
 [Contributor Code of Conduct](https://bioconductor.org/about/code-of-conduct/).
 By contributing to this project, you agree to abide by its terms. Contributions
 are welcome in the form of feedback, issues and pull requests. You can find the
@@ -40,7 +40,7 @@ contributor guidelines of the miaverse
 [here](https://github.com/microbiome/mia/blob/devel/CONTRIBUTING.md).
 
 ## Acknowledgements
-Please note that iSEEbug was only made possible thanks to many other R and
+Please note that miaDash was only made possible thanks to many other R and
 bioinformatics software authors, which are cited in the vignettes describing
 this package.
 
