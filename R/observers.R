@@ -237,6 +237,7 @@
 #' @importFrom shiny updateSelectInput updateNumericInput observe
 #' @importFrom SummarizedExperiment assayNames
 #' @importFrom mia taxonomyRanks
+#' @importFrom rintrojs introjs
 .update_observers <- function(input, session, rObjects){
   
     observe({
@@ -264,6 +265,10 @@
       }
     
     })
+    
+    observeEvent(input[[iSEE:::.generalTourSteps]], {
+        introjs(session, options=list(steps=.landing_page_tour))
+    }, ignoreInit=TRUE)
     
     invisible(NULL)
 }

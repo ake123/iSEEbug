@@ -27,7 +27,7 @@ miaDash <- function() {
 
     iSEE(
         landingPage = .landing_page,
-        appTitle = sprintf("miaDash - v%s", packageVersion("miaDash"))
+        appTitle = sprintf("Microbiome Analysis Dashboard - v%s", packageVersion("miaDash"))
     )
 
 }

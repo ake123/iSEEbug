@@ -26,7 +26,7 @@
 
         fluidPage(
           
-            fluidRow(column(4, wellPanel(
+            fluidRow(column(4, wellPanel(id = "import.panel",
               
               titlePanel("Import"),
             
@@ -94,12 +94,12 @@
                           
                       ),
               
-                  actionButton("import", "Build", class = "btn-success",
+                  actionButton("import", "Upload", class = "btn-success",
                       style = iSEE:::.actionbutton_biocstyle)
                 
                 )),
             
-            column(4, wellPanel(
+            column(4, wellPanel(id = "manipulate.panel",
               
               titlePanel("Manipulate"),
               
@@ -152,7 +152,7 @@
             
             )),
             
-            column(4, wellPanel(
+            column(4, wellPanel(id = "estimate.panel",
               
               titlePanel("Estimate"),
               
@@ -210,7 +210,7 @@
   
             fluidRow(
               
-              column(4, wellPanel(
+              column(4, wellPanel(id = "visualise.panel",
                 
                 titlePanel("Visualise"),
                 
@@ -223,13 +223,14 @@
                 
               )),
               
-              column(8, wellPanel(
+              column(8, wellPanel(id = "output.panel",
               
               titlePanel("Output"),
               
               verbatimTextOutput(outputId = "object"),
               
-              downloadButton(outputId = "download", label = "Download")
+              downloadButton(outputId = "download", label = "Download",
+                  style = iSEE:::.actionbutton_biocstyle)
               
             )))
           )
