@@ -5,8 +5,6 @@
 #'   object, respectively.
 #'
 #' @param output The Shiny output object from the server function.
-#' @param pObjects An environment containing global parameters generated in the
-#'   landing page.
 #'
 #' @return Adds a rendered item to \code{output}.
 #'   A \code{NULL} value is invisibly returned.

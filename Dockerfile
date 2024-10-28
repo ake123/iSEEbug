@@ -2,11 +2,11 @@ FROM bioconductor/bioconductor_docker:devel
 
 MAINTAINER giulio.benedetti@utu.fi
 LABEL authors="giulio.benedetti@utu.fi" \
-    description="Docker image containing the iSEEbug package in a bioconductor/bioconductor_docker:devel container."
+    description="Docker image containing the miaDash package in a bioconductor/bioconductor_docker:devel container."
 
-WORKDIR /home/rstudio/iseebug
+WORKDIR /home/rstudio/miadash
 
-COPY --chown=rstudio:rstudio . /home/rstudio/iseebug
+COPY --chown=rstudio:rstudio . /home/rstudio/miadash
 
 RUN apt-get update && apt-get install -y libglpk-dev && apt-get clean && rm -rf /var/lib/apt/lists/*
 

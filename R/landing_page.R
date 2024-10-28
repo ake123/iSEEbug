@@ -1,6 +1,6 @@
 #' Landing page
 #' 
-#' \code{.landing_page} creates the landing page of iSEEhub, where TreeSE objects
+#' \code{.landing_page} creates the landing page of miaDash, where TreeSE objects
 #' can be built and iSEE can be launched.
 #'
 #' @return The UI is defined by the function. A \code{NULL} value is invisibly
@@ -10,9 +10,11 @@
 #' @keywords internal
 
 #' @rdname landing_page
-#' @importFrom shiny actionButton fluidPage titlePanel sidebarLayout
+#' @importFrom shiny actionButton fluidPage titlePanel sidebarLayout column
 #'   sidebarPanel mainPanel tabPanel tabsetPanel renderUI selectInput
-#'   fileInput checkboxInput verbatimTextOutput downloadButton
+#'   sliderInput textInput wellPanel fluidRow reactiveValues radioButtons
+#'   numericInput fileInput checkboxInput verbatimTextOutput downloadButton
+#'   conditionalPanel
 #' @importFrom shinyjs disable
 #' @importFrom utils data
 .landing_page <- function(FUN, input, output, session) {
@@ -26,7 +28,7 @@
 
         fluidPage(
           
-            fluidRow(column(4, wellPanel(
+            fluidRow(column(4, wellPanel(id = "import.panel",
               
               titlePanel("Import"),
             
@@ -40,10 +42,10 @@
                                    
                         ),
                           
-                        tabPanel(title = "R Object", value = "rda",
+                        tabPanel(title = "R Object", value = "rds",
                                    
-                            fileInput(inputId = "file", label = "RDA:",
-                                accept = ".rda")
+                            fileInput(inputId = "file", label = "RDS:",
+                                accept = ".rds")
                                    
                         ),
                           
@@ -94,12 +96,12 @@
                           
                       ),
               
-                  actionButton("import", "Build", class = "btn-success",
-                      style = iSEE:::.actionbutton_biocstyle)
+                  actionButton("import", "Upload", class = "btn-success",
+                      style = .actionbutton_biocstyle)
                 
                 )),
             
-            column(4, wellPanel(
+            column(4, wellPanel(id = "manipulate.panel",
               
               titlePanel("Manipulate"),
               
@@ -122,7 +124,7 @@
                            
                   ),
                   
-                  tabPanel(title = "Aggregate", value = "aggregate",
+                  tabPanel(title = "Agglomerate", value = "agglomerate",
                   
                       selectInput(inputId = "taxrank", label = "Taxonomic rank:",
                           choices = NULL)         
@@ -148,11 +150,11 @@
               )),
               
               actionButton("apply", "Apply", class = "btn-success",
-                  style = iSEE:::.actionbutton_biocstyle)
+                  style = .actionbutton_biocstyle)
             
             )),
             
-            column(4, wellPanel(
+            column(4, wellPanel(id = "estimate.panel",
               
               titlePanel("Estimate"),
               
@@ -173,11 +175,12 @@
                   
                   tabPanel(title = "Beta", value = "beta",
                            
+                      radioButtons(inputId = "bmethod", label = "Method:",
+                          choices = c("MDS", "NMDS", "PCA", "RDA"), inline = TRUE),
+                         
+                           
                       selectInput(inputId = "beta.assay", label = "Assay:",
                           choices = NULL),
-                      
-                      selectInput(inputId = "bmethod", label = "Method:",
-                          choices = c("MDS", "NMDS", "PCA", "RDA")),
                       
                       conditionalPanel(
                           condition = "input.bmethod != 'PCA'",
@@ -186,7 +189,14 @@
                               choices = c("euclidean", "bray", "jaccard", "unifrac")),
                       ),
                       
-                      numericInput(inputId = "ncomponents", value = 2,
+                      conditionalPanel(
+                          condition = "input.bmethod == 'RDA'",
+                        
+                          textInput(inputId = "rda.formula", label = "Formula:",
+                              placeholder = "data ~ var1 + var2 * var3"),
+                      ),
+                      
+                      numericInput(inputId = "ncomponents", value = 5,
                           label = "Number of components:", min = 1, step = 1),
                       
                       textInput(inputId = "beta.name", label = "Name:")
@@ -196,13 +206,13 @@
               ),
               
               actionButton("compute", "Compute", class = "btn-success",
-                  style = iSEE:::.actionbutton_biocstyle)
+                  style = .actionbutton_biocstyle)
               
             ))),
   
             fluidRow(
               
-              column(4, wellPanel(
+              column(4, wellPanel(id = "visualise.panel",
                 
                 titlePanel("Visualise"),
                 
@@ -211,33 +221,34 @@
                     multiple = TRUE, selected = c(default_panels)),
                 
                 actionButton("launch", "Launch iSEE", class = "btn-success",
-                    style = iSEE:::.actionbutton_biocstyle)
+                    style = .actionbutton_biocstyle)
                 
               )),
               
-              column(8, wellPanel(
+              column(8, wellPanel(id = "output.panel",
               
               titlePanel("Output"),
               
               verbatimTextOutput(outputId = "object"),
               
-              downloadButton(outputId = "download", label = "Download")
+              downloadButton(outputId = "download", label = "Download",
+                  style = .actionbutton_biocstyle)
               
             )))
           )
     })
     
     ## Disable navbar buttons that are not linked to any observer yet
-    disable(iSEE:::.generalOrganizePanels) # organize panels
-    disable(iSEE:::.generalLinkGraph) # link graph
-    disable(iSEE:::.generalExportOutput) # export content
-    disable(iSEE:::.generalCodeTracker) # tracked code
-    disable(iSEE:::.generalPanelSettings) # panel settings
-    disable(iSEE:::.generalVignetteOpen) # open vignette
-    disable(iSEE:::.generalSessionInfo) # session info
-    disable(iSEE:::.generalCitationInfo) # citation info
+    disable("iSEE_INTERNAL_organize_panels")  # organize panels
+    disable("iSEE_INTERNAL_link_graph")       # link graph
+    disable("iSEE_INTERNAL_export_content")   # export content
+    disable("iSEE_INTERNAL_tracked_code")     # tracked code
+    disable("iSEE_INTERNAL_panel_settings")   # panel settings
+    disable("iSEE_INTERNAL_open_vignette")    # open vignette
+    disable("iSEE_INTERNAL_session_info")     # session info
+    disable("iSEE_INTERNAL_citation_info")    # citation info
     
-    rObjects <- reactiveValues(tse = 1L)
+    rObjects <- reactiveValues(tse = NULL)
     
     .create_import_observers(input, rObjects)
     .create_manipulate_observers(input, rObjects)
@@ -252,10 +263,3 @@
     invisible(NULL)
     # nocov end
 }
-
-default_panels <- c("RowDataTable", "ColumnDataTable", "RowTreePlot",
-                    "AbundancePlot", "AbundanceDensityPlot", "ReducedDimensionPlot",
-                    "ComplexHeatmapPlot")
-
-other_panels <- c("LoadingPlot", "ColumnTreePlot", "RDAPlot", "ColumnDataPlot",
-                  "RowDataPlot")

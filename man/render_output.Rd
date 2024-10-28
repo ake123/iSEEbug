@@ -12,9 +12,6 @@
 }
 \arguments{
 \item{output}{The Shiny output object from the server function.}
-
-\item{pObjects}{An environment containing global parameters generated in the
-landing page.}
 }
 \value{
 Adds a rendered item to \code{output}.

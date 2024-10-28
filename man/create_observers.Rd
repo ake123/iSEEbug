@@ -23,9 +23,6 @@
 \item{input}{The Shiny input object from the server function.}
 
 \item{rObjects}{A reactive list of values generated in the landing page.}
-
-\item{pObjects}{An environment containing global parameters generated in the
-landing page.}
 }
 \value{
 Observers are created in the server function in which this is called.

@@ -1,9 +1,9 @@
 timestamp()
 message("* Started")
 
-library(iSEEbug)
+library(miaDash)
 
-app <- iSEEbug()
+app <- miaDash()
 shiny::runApp(app, port = 1234, host = "0.0.0.0")
 
 message("* Completed")

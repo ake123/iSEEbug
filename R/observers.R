@@ -5,8 +5,6 @@
 #' and Launch buttons.
 #'
 #' @param input The Shiny input object from the server function.
-#' @param pObjects An environment containing global parameters generated in the
-#'   landing page.
 #' @param rObjects A reactive list of values generated in the landing page.
 #'
 #' @return Observers are created in the server function in which this is called.
@@ -16,6 +14,8 @@
 #' @keywords internal
 
 #' @rdname create_observers
+#' @importFrom utils read.csv
+#' @importFrom S4Vectors DataFrame
 #' @importFrom shiny isolate observeEvent req
 #' @importFrom biomformat read_biom
 #' @importFrom mia convertFromBIOM importMetaPhlAn
@@ -28,12 +28,12 @@
       
             rObjects$tse <- isolate(get(input$data))
       
-        }else if( input$format == "rda" ){
+        }else if( input$format == "rds" ){
       
             isolate({
                 req(input$file)
                 load(file = input$file$datapath)
-                rObjects$tse <- base::get(gsub(".rda", "", input$file$name))
+                rObjects$tse <- readRDS(gsub(".rds", "", input$file$name))
             })
       
         }else if( input$format == "raw" ){
@@ -106,6 +106,7 @@
 
 #' @rdname create_observers
 #' @importFrom shiny isolate observeEvent req
+#' @importFrom SummarizedExperiment assay
 #' @importFrom mia subsetByPrevalent subsetByRare agglomerateByRank
 #'   transformAssay
 .create_manipulate_observers <- function(input, rObjects) {
@@ -131,7 +132,7 @@
           
         }
       
-        else if( input$manipulate == "aggregate" ){
+        else if( input$manipulate == "agglomerate" ){
           
             isolate({
                 
@@ -142,10 +143,21 @@
           
         } else if( input$manipulate == "transform" ){
 
+            if( input$trans.method == "clr" && !input$pseudocount &&
+                any(assay(rObjects$tse, input$assay.type) <= 0)){
+              
+                .print_message(
+                    "'clr' cannot be used with non-positive data:",
+                    "please turn on pseudocount."
+                )
+              
+                return()
+            }
+          
             isolate({
                 req(input$assay.type)
               
-                if( mia:::.is_non_empty_string(input$assay.name) ){
+                if( input$assay.name != "" ){
                     name <- input$assay.name
                 } else {
                     name <- input$trans.method
@@ -159,26 +171,33 @@
           
         }
       
-    }, ignoreInit = TRUE, ignoreNULL = FALSE)
+    }, ignoreInit = TRUE, ignoreNULL = TRUE)
   
     invisible(NULL)
 }
 
 #' @rdname create_observers
+#' @importFrom stats as.formula
 #' @importFrom shiny isolate observeEvent req
 #' @importFrom mia addAlpha runNMDS runRDA getDissimilarity
+#' @importFrom TreeSummarizedExperiment rowTree
 #' @importFrom scater runMDS runPCA
 #' @importFrom vegan vegdist
 .create_estimate_observers <- function(input, rObjects) {
   
     observeEvent(input$compute, {
-      
+        
         if( input$estimate == "alpha" ){
+          
+            if( is.null(input$alpha.index) ){
+                .print_message("Please select one or more metrics.")
+                return()
+            }
         
             isolate({
                 req(input$alpha.assay)
-          
-                if( mia:::.is_non_empty_string(input$alpha.name) ){
+              
+                if( input$alpha.name != "" ){
                     name <- input$alpha.name
                 } else {
                     name <- input$alpha.index
@@ -191,13 +210,23 @@
         
         } else if( input$estimate == "beta" ){
           
+            if( input$ncomponents > nrow(rObjects$tse) - 1 ){
+              
+                .print_message(
+                    "Please use a number of components smaller than the number",
+                    "of features in the assay."
+                )
+              
+                return()
+            }
+          
             isolate({
                 req(input$beta.assay)
               
-                if( mia:::.is_non_empty_string(input$beta.name) ){
+                if( input$beta.name != "" ){
                     name <- input$beta.name
                 } else {
-                    name <- input$beta.index
+                    name <- input$bmethod
                 }
               
                 beta_args <- list(x = rObjects$tse, assay.type = input$assay.type,
@@ -216,18 +245,30 @@
                     
                 } else if( input$bmethod == "RDA" ){
                   
-                    beta_args <- c(beta_args, formula = "")
+                    if( input$rda.formula == "" ){
+                        .print_message("Please enter a formula.")
+                        return()
+                    }
+                  
+                    if( !.check_formula(input$rda.formula, rObjects$tse) ){
+                        .print_message("Please make sure all elements in the",
+                           "formula match variables of the column data.")
+                        return()
+                    }
+                  
+                    beta_args <- c(beta_args,
+                        formula = as.formula(input$rda.formula))
                   
                 }
               
-                beta_fun <- eval(parse(text = paste0("run", "MDS")))
+                beta_fun <- eval(parse(text = paste0("run", input$bmethod)))
                 rObjects$tse <- do.call(beta_fun, beta_args)
               
             })
         
         }
         
-    }, ignoreInit = TRUE, ignoreNULL = FALSE)
+    }, ignoreInit = TRUE, ignoreNULL = TRUE)
   
     invisible(NULL)
 }
@@ -236,6 +277,7 @@
 #' @importFrom shiny updateSelectInput updateNumericInput observe
 #' @importFrom SummarizedExperiment assayNames
 #' @importFrom mia taxonomyRanks
+#' @importFrom rintrojs introjs
 .update_observers <- function(input, session, rObjects){
   
     observe({
@@ -263,6 +305,12 @@
       }
     
     })
+    
+    observeEvent(input$iSEE_INTERNAL_tour_steps, {
+      
+        introjs(session, options = list(steps = .landing_page_tour))
+      
+    }, ignoreInit = TRUE)
     
     invisible(NULL)
 }

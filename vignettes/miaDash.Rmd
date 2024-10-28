@@ -1,0 +1,90 @@
+---
+title: "miaDash"
+author: 
+  - name: Giulio Benedetti
+    affiliation: University of Turku
+    email: giulio.benedetti@utu.fi
+output:
+    BiocStyle::html_document:
+        fig_height: 7
+        fig_width: 10
+        toc: true
+        toc_float: true
+        toc_depth: 2
+        number_sections: true
+        self_contained: true
+        code_folding: show
+date: "`r doc_date()`"
+package: "`r pkg_ver('miaDash')`"
+vignette: >
+  %\VignetteIndexEntry{miaDash}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Introduction
+
+## Motivation
+
+## Interface
+
+# Tutorial
+
+## Installation
+
+```{r install, eval=FALSE}
+remotes::install_github("RiboRings/miaDash")
+```
+
+## Example
+
+```{r start, message=FALSE, warning=FALSE}
+library(miaDash)
+
+app <- miaDash()
+
+# Launch miaDash
+if (interactive()) {
+  shiny::runApp(app)
+}
+```
+
+```{r screenfun, eval=!exists("SCREENSHOT"), include=FALSE}
+SCREENSHOT <- function(x, ...) knitr::include_graphics(x)
+```
+
+```{r screenplot, echo=FALSE, out.width="100%"}
+SCREENSHOT("screenshots/get_started.png", delay = 20)
+```
+
+# Resources
+
+## Citation
+
+We hope that miaDash will be useful for your research. Please use the following information to cite the package and the overall approach. Thank you!
+
+```{r citation}
+## Citation info
+citation("miaDash")
+```
+
+## Background Knowledge
+
+## Help
+
+# Reproducibility
+
+R session information:
+
+```{r reproduce, echo=FALSE}
+## Session info
+options(width = 120)
+sessionInfo()
+```

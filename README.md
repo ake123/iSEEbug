@@ -1,38 +1,43 @@
-# iSEEbug
+# miaDash
 
-[![issues](https://img.shields.io/github/issues/RiboRings/iSEEbug)](https://github.com/RiboRings/iSEEbug/issues)
-[![pulls](https://img.shields.io/github/issues-pr/RiboRings/iSEEbug)](https://github.com/RiboRings/iSEEbug/pulls)
-[![R-CMD-check](https://github.com/RiboRings/iSEEbug/workflows/rworkflows/badge.svg)](https://github.com/RiboRings/iSEEbug/actions)
-[![codecov](https://codecov.io/gh/RiboRings/iSEEbug/branch/devel/graph/badge.svg)](https://app.codecov.io/gh/RiboRings/iSEEbug?branch=devel)
-[![codefactor](https://www.codefactor.io/repository/github/RiboRings/iseebug/badge)](https://www.codefactor.io/repository/github/RiboRings/iseebug)
+[![issues](https://img.shields.io/github/issues/RiboRings/miaDash)](https://github.com/RiboRings/miaDash/issues)
+[![pulls](https://img.shields.io/github/issues-pr/RiboRings/miaDash)](https://github.com/RiboRings/miaDash/pulls)
+[![R-CMD-check](https://github.com/RiboRings/miaDash/workflows/rworkflows/badge.svg)](https://github.com/RiboRings/miaDash/actions)
+[![codecov](https://codecov.io/gh/RiboRings/miaDash/branch/devel/graph/badge.svg)](https://app.codecov.io/gh/RiboRings/miaDash?branch=devel)
+[![codefactor](https://www.codefactor.io/repository/github/RiboRings/miadash/badge)](https://www.codefactor.io/repository/github/RiboRings/miadash)
 
-The goal of iSEEbug is to provide a user-friendly interface to import, build,
-explore and visualise TreeSummarizedExperiment objects by means of
-[_iSEE_](https://isee.github.io/).
+The goal of miaDash is to provide a user-friendly interface to import,
+manipulate, analyse and visualise TreeSummarizedExperiment objects.
+
+## Usage
+miaDash is available online at [this address](iseebug-iseebug.2.rahtiapp.fi/).
+While suitable for small and medium datasets, the online version may slow down
+when larger datasets are analysed (< 1000 features). In this case, the app can
+be installed and run locally. Either way, the app also provides functionality to subset and agglomerate the data.
 
 ## Installation instructions
-The devel version of iSEEbug can be installed from GitHub as follows:
+The devel version of miaDash can be installed from GitHub as follows:
 
 ```
-remotes::install_github("RiboRings/iSEEbug")
+remotes::install_github("RiboRings/miaDash")
 ```
 
 ## Example
-The basic functionality of iSEEbug can be explored as follows:
+The basic functionality of miaDash can be explored as follows:
 
 ```
-library(iSEEbug)
+library(miaDash)
 
-app <- iSEEbug()
+app <- miaDash()
 
-# Launch iSEE
+# Launch miaDash
 if (interactive()) {
   shiny::runApp(app)
 }
 ```
 
 ## Code of Conduct
-Please note that the iSEEbug project is released with a
+Please note that the miaDash project is released with a
 [Contributor Code of Conduct](https://bioconductor.org/about/code-of-conduct/).
 By contributing to this project, you agree to abide by its terms. Contributions
 are welcome in the form of feedback, issues and pull requests. You can find the
@@ -40,24 +45,10 @@ contributor guidelines of the miaverse
 [here](https://github.com/microbiome/mia/blob/devel/CONTRIBUTING.md).
 
 ## Acknowledgements
-Please note that iSEEbug was only made possible thanks to many other R and
-bioinformatics software authors, which are cited in the vignettes describing
-this package.
+miaDash results from the joint effort of the larger R/Bioconductor community. In
+particular, this software mainly depends on the following packages:
 
-This package was developed using the following resources:
-
-- [_usethis_](https://cran.r-project.org/web/packages/usethis/) to generate an
-  initial template.
-- Continuous code testing is performed on
-  [GitHub actions](https://github.com/features/actions) and include R CMD check,
-  [_BiocCheck_](https://bioconductor.org/packages/3.16/bioc/html/BiocCheck.html)
-  and testthat.
-- Code coverage assessment is possible thanks to
-  [codecov](https://app.codecov.io/gh/).
-- The documentation website is automatically updated thanks to
-  [_pkgdown_](https://cran.r-project.org/web/packages/pkgdown/).
-- The documentation is formatted thanks to
-  [_devtools_](https://cran.r-project.org/web/packages/devtools/) and
-  [_roxygen2_](https://cran.r-project.org/web/packages/roxygen2/).
-- All the actions above are made reproducible by
-  [_rworkflows_](https://neurogenomics.github.io/rworkflows/)
+- [_mia_](https://bioconductor.org/packages/release/bioc/html/mia.html)
+- [_iSEEtree_](https://bioconductor.org/packages/devel/bioc/html/iSEEtree.html)
+- [_iSEE_](https://isee.github.io/)
+- [_shiny_](https://cran.r-project.org/web/packages/shiny/)
