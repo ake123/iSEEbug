@@ -246,7 +246,7 @@
     disable(iSEE:::.generalSessionInfo) # session info
     disable(iSEE:::.generalCitationInfo) # citation info
     
-    rObjects <- reactiveValues(tse = 1L)
+    rObjects <- reactiveValues(tse = NULL)
     
     .create_import_observers(input, rObjects)
     .create_manipulate_observers(input, rObjects)
@@ -261,10 +261,3 @@
     invisible(NULL)
     # nocov end
 }
-
-default_panels <- c("RowDataTable", "ColumnDataTable", "RowTreePlot",
-                    "AbundancePlot", "AbundanceDensityPlot", "ReducedDimensionPlot",
-                    "ComplexHeatmapPlot")
-
-other_panels <- c("LoadingPlot", "ColumnTreePlot", "RDAPlot", "ColumnDataPlot",
-                  "RowDataPlot")

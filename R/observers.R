@@ -142,6 +142,17 @@
           
         } else if( input$manipulate == "transform" ){
 
+            if( input$trans.method == "clr" && !input$pseudocount &&
+                any(assay(rObjects$tse, input$assay.type) <= 0)){
+              
+                .print_message(
+                    "'clr' cannot be used with non-positive data:",
+                    "please turn on pseudocount."
+                )
+              
+                return()
+            }
+          
             isolate({
                 req(input$assay.type)
               
@@ -159,7 +170,7 @@
           
         }
       
-    }, ignoreInit = TRUE, ignoreNULL = FALSE)
+    }, ignoreInit = TRUE, ignoreNULL = TRUE)
   
     invisible(NULL)
 }
@@ -172,8 +183,13 @@
 .create_estimate_observers <- function(input, rObjects) {
   
     observeEvent(input$compute, {
-      
+        
         if( input$estimate == "alpha" ){
+          
+            if( is.null(input$alpha.index) ){
+                .print_message("Please select one or more metrics.")
+                return()
+            }
         
             isolate({
                 req(input$alpha.assay)
@@ -216,6 +232,17 @@
                     
                 } else if( input$bmethod == "RDA" ){
                   
+                    if( input$rda.formula == "" ){
+                        .print_message("Please enter a formula.")
+                        return()
+                    }
+                  
+                    if( !.check_formula(input$rda.formula, rObjects$tse) ){
+                        .print_message("Please make sure all elements in the",
+                           "formula match variables of the column data.")
+                        return()
+                    }
+                  
                     beta_args <- c(beta_args,
                         formula = as.formula(input$rda.formula))
                   
@@ -228,7 +255,7 @@
         
         }
         
-    }, ignoreInit = TRUE, ignoreNULL = FALSE)
+    }, ignoreInit = TRUE, ignoreNULL = TRUE)
   
     invisible(NULL)
 }
