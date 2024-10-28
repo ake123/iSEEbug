@@ -15,7 +15,8 @@ output:
         self_contained: true
         code_folding: show
 date: "`r doc_date()`"
-package: "`r pkg_ver('miaDash')`"vignette: >
+package: "`r pkg_ver('miaDash')`"
+vignette: >
   %\VignetteIndexEntry{miaDash}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
@@ -60,7 +61,7 @@ SCREENSHOT <- function(x, ...) knitr::include_graphics(x)
 ```
 
 ```{r screenplot, echo=FALSE, out.width="100%"}
-SCREENSHOT("screenshots/get_started.png", delay=20)
+SCREENSHOT("screenshots/get_started.png", delay = 20)
 ```
 
 # Resources

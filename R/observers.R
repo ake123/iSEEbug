@@ -5,8 +5,6 @@
 #' and Launch buttons.
 #'
 #' @param input The Shiny input object from the server function.
-#' @param pObjects An environment containing global parameters generated in the
-#'   landing page.
 #' @param rObjects A reactive list of values generated in the landing page.
 #'
 #' @return Observers are created in the server function in which this is called.
@@ -16,6 +14,8 @@
 #' @keywords internal
 
 #' @rdname create_observers
+#' @importFrom utils read.csv
+#' @importFrom S4Vectors DataFrame
 #' @importFrom shiny isolate observeEvent req
 #' @importFrom biomformat read_biom
 #' @importFrom mia convertFromBIOM importMetaPhlAn
@@ -106,6 +106,7 @@
 
 #' @rdname create_observers
 #' @importFrom shiny isolate observeEvent req
+#' @importFrom SummarizedExperiment assay
 #' @importFrom mia subsetByPrevalent subsetByRare agglomerateByRank
 #'   transformAssay
 .create_manipulate_observers <- function(input, rObjects) {
@@ -156,7 +157,7 @@
             isolate({
                 req(input$assay.type)
               
-                if( mia:::.is_non_empty_string(input$assay.name) ){
+                if( input$assay.name != "" ){
                     name <- input$assay.name
                 } else {
                     name <- input$trans.method
@@ -176,8 +177,10 @@
 }
 
 #' @rdname create_observers
+#' @importFrom stats as.formula
 #' @importFrom shiny isolate observeEvent req
 #' @importFrom mia addAlpha runNMDS runRDA getDissimilarity
+#' @importFrom TreeSummarizedExperiment rowTree
 #' @importFrom scater runMDS runPCA
 #' @importFrom vegan vegdist
 .create_estimate_observers <- function(input, rObjects) {
@@ -193,8 +196,8 @@
         
             isolate({
                 req(input$alpha.assay)
-          
-                if( mia:::.is_non_empty_string(input$alpha.name) ){
+              
+                if( input$alpha.name != "" ){
                     name <- input$alpha.name
                 } else {
                     name <- input$alpha.index
@@ -220,7 +223,7 @@
             isolate({
                 req(input$beta.assay)
               
-                if( mia:::.is_non_empty_string(input$beta.name) ){
+                if( input$beta.name != "" ){
                     name <- input$beta.name
                 } else {
                     name <- input$bmethod

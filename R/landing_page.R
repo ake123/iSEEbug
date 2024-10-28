@@ -10,9 +10,11 @@
 #' @keywords internal
 
 #' @rdname landing_page
-#' @importFrom shiny actionButton fluidPage titlePanel sidebarLayout
+#' @importFrom shiny actionButton fluidPage titlePanel sidebarLayout column
 #'   sidebarPanel mainPanel tabPanel tabsetPanel renderUI selectInput
-#'   fileInput checkboxInput verbatimTextOutput downloadButton
+#'   sliderInput textInput wellPanel fluidRow reactiveValues radioButtons
+#'   numericInput fileInput checkboxInput verbatimTextOutput downloadButton
+#'   conditionalPanel
 #' @importFrom shinyjs disable
 #' @importFrom utils data
 .landing_page <- function(FUN, input, output, session) {

@@ -37,7 +37,8 @@ miaDash <- function() {
 #' @importFrom iSEE RowDataTable ColumnDataTable ReducedDimensionPlot
 #'   ComplexHeatmapPlot
 #' @importFrom iSEEtree RowTreePlot AbundancePlot RDAPlot AbundanceDensityPlot
-#' @importFrom TreeSummarizedExperiment rowLinks
+#'   LoadingPlot ColumnTreePlot
+#' @importFrom TreeSummarizedExperiment rowLinks colLinks
 #' @importFrom mia taxonomyRanks
 #' @importFrom SummarizedExperiment rowData colData
 #' @importFrom SingleCellExperiment reducedDims
@@ -47,11 +48,13 @@ miaDash <- function() {
   
     initial <- lapply(initial, function(x) eval(parse(text = paste0(x, "()"))))
     
-    initial <- iSEEtree:::.check_panel(tse, initial, "RowDataTable", rowData)
-    initial <- iSEEtree:::.check_panel(tse, initial, "ColumnDataTable", colData)
-    initial <- iSEEtree:::.check_panel(tse, initial, "RowTreePlot", rowLinks)
-    initial <- iSEEtree:::.check_panel(tse, initial, "AbundancePlot", taxonomyRanks)
-    initial <- iSEEtree:::.check_panel(tse, initial, "ReducedDimensionPlot", reducedDims)
+    initial <- .check_panel(tse, initial, "RowDataTable", rowData)
+    initial <- .check_panel(tse, initial, "ColumnDataTable", colData)
+    initial <- .check_panel(tse, initial, "RowTreePlot", rowLinks)
+    initial <- .check_panel(tse, initial, "AbundancePlot", taxonomyRanks)
+    initial <- .check_panel(tse, initial, "ReducedDimensionPlot", reducedDims)
+    initial <- .check_panel(tse, initial, "LoadingPlot", reducedDims)
+    initial <- .check_panel(tse, initial, "ColumnTreePlot", colLinks)
   
     FUN(SE = tse, INIT = initial)#, EXTRA = initial)
   
