@@ -55,14 +55,14 @@ miaDash <- function() {
   
     FUN(SE = tse, INIT = initial)#, EXTRA = initial)
   
-    enable(iSEE:::.generalOrganizePanels) # organize panels
-    enable(iSEE:::.generalLinkGraph)      # link graph
-    enable(iSEE:::.generalExportOutput)   # export content
-    enable(iSEE:::.generalCodeTracker)    # tracked code
-    enable(iSEE:::.generalPanelSettings)  # panel settings
-    enable(iSEE:::.generalVignetteOpen)   # open vignette
-    enable(iSEE:::.generalSessionInfo)    # session info
-    enable(iSEE:::.generalCitationInfo)   # citation info
+    enable("iSEE_INTERNAL_organize_panels")  # organize panels
+    enable("iSEE_INTERNAL_link_graph")       # link graph
+    enable("iSEE_INTERNAL_export_content")   # export content
+    enable("iSEE_INTERNAL_tracked_code")     # tracked code
+    enable("iSEE_INTERNAL_panel_settings")   # panel settings
+    enable("iSEE_INTERNAL_open_vignette")    # open vignette
+    enable("iSEE_INTERNAL_session_info")     # session info
+    enable("iSEE_INTERNAL_citation_info")    # citation info
   
     invisible(NULL)
 }

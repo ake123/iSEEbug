@@ -207,6 +207,16 @@
         
         } else if( input$estimate == "beta" ){
           
+            if( input$ncomponents > nrow(rObjects$tse) - 1 ){
+              
+                .print_message(
+                    "Please use a number of components smaller than the number",
+                    "of features in the assay."
+                )
+              
+                return()
+            }
+          
             isolate({
                 req(input$beta.assay)
               
@@ -293,9 +303,11 @@
     
     })
     
-    observeEvent(input[[iSEE:::.generalTourSteps]], {
-        introjs(session, options=list(steps=.landing_page_tour))
-    }, ignoreInit=TRUE)
+    observeEvent(input$iSEE_INTERNAL_tour_steps, {
+      
+        introjs(session, options = list(steps = .landing_page_tour))
+      
+    }, ignoreInit = TRUE)
     
     invisible(NULL)
 }

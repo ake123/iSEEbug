@@ -16,6 +16,7 @@ Description:
     microbiome data. This way, no knowledge of programming is required to
     perform analyses. Datasets can be imported, manipulated, analysed and
     visualised with a user-friendly interface.
+biocViews: Microbiome, Software, Visualization, GUI, ShinyApps, DataImport
 License: Artistic-2.0
 Encoding: UTF-8
 Depends:

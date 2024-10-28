@@ -95,7 +95,7 @@
                       ),
               
                   actionButton("import", "Upload", class = "btn-success",
-                      style = iSEE:::.actionbutton_biocstyle)
+                      style = .actionbutton_biocstyle)
                 
                 )),
             
@@ -148,7 +148,7 @@
               )),
               
               actionButton("apply", "Apply", class = "btn-success",
-                  style = iSEE:::.actionbutton_biocstyle)
+                  style = .actionbutton_biocstyle)
             
             )),
             
@@ -204,7 +204,7 @@
               ),
               
               actionButton("compute", "Compute", class = "btn-success",
-                  style = iSEE:::.actionbutton_biocstyle)
+                  style = .actionbutton_biocstyle)
               
             ))),
   
@@ -219,7 +219,7 @@
                     multiple = TRUE, selected = c(default_panels)),
                 
                 actionButton("launch", "Launch iSEE", class = "btn-success",
-                    style = iSEE:::.actionbutton_biocstyle)
+                    style = .actionbutton_biocstyle)
                 
               )),
               
@@ -230,21 +230,21 @@
               verbatimTextOutput(outputId = "object"),
               
               downloadButton(outputId = "download", label = "Download",
-                  style = iSEE:::.actionbutton_biocstyle)
+                  style = .actionbutton_biocstyle)
               
             )))
           )
     })
     
     ## Disable navbar buttons that are not linked to any observer yet
-    disable(iSEE:::.generalOrganizePanels) # organize panels
-    disable(iSEE:::.generalLinkGraph) # link graph
-    disable(iSEE:::.generalExportOutput) # export content
-    disable(iSEE:::.generalCodeTracker) # tracked code
-    disable(iSEE:::.generalPanelSettings) # panel settings
-    disable(iSEE:::.generalVignetteOpen) # open vignette
-    disable(iSEE:::.generalSessionInfo) # session info
-    disable(iSEE:::.generalCitationInfo) # citation info
+    disable("iSEE_INTERNAL_organize_panels")  # organize panels
+    disable("iSEE_INTERNAL_link_graph")       # link graph
+    disable("iSEE_INTERNAL_export_content")   # export content
+    disable("iSEE_INTERNAL_tracked_code")     # tracked code
+    disable("iSEE_INTERNAL_panel_settings")   # panel settings
+    disable("iSEE_INTERNAL_open_vignette")    # open vignette
+    disable("iSEE_INTERNAL_session_info")     # session info
+    disable("iSEE_INTERNAL_citation_info")    # citation info
     
     rObjects <- reactiveValues(tse = NULL)
     
