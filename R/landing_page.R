@@ -18,10 +18,8 @@
 #' @importFrom shinyjs disable
 #' @importFrom utils data
 .landing_page <- function(FUN, input, output, session) {
-
-    mia_datasets <- data(package = "mia")
-    mia_datasets <- mia_datasets$results[-c(2, 5), "Item"]
-    data(list = mia_datasets, package = "mia")
+  
+    mia_datasets <- .import_datasets(-c(2, 5))
   
     # nocov start
     output$allPanels <- renderUI({
@@ -30,7 +28,7 @@
           
             fluidRow(column(4, wellPanel(id = "import.panel",
               
-              titlePanel("Import"),
+                titlePanel("Import"),
             
                     tabsetPanel(id = "format",
                           
@@ -60,159 +58,157 @@
                             fileInput(inputId = "rowdata", label = "rowData:",
                                 accept = ".csv")     
                         
-                         ),
+                        ),
                           
-                         tabPanel(title = "Foreign", value = "foreign",
+                        tabPanel(title = "Foreign", value = "foreign",
                                   
-                             radioButtons(inputId = "ftype",
-                                 label = "Type:", choices = list("biom", "QZA",
-                                 "MetaPhlAn")),
+                            radioButtons(inputId = "ftype",
+                                label = "Type:", choices = list("biom", "QZA",
+                                "MetaPhlAn")),
                              
-                             fileInput(inputId = "main.file",
-                                 label = "Main file:", accept = c(".biom",
-                                 ".QZA", ".txt")),
+                            fileInput(inputId = "main.file",
+                                label = "Main file:", accept = c(".biom",
+                                ".QZA", ".txt")),
                              
-                             conditionalPanel(
-                                 condition = "input.ftype == 'biom'",
+                            conditionalPanel(
+                                condition = "input.ftype == 'biom'",
                                
-                                 checkboxInput(inputId = "rm.tax.pref",
-                                     label = "Remove taxa prefixes"),
+                                checkboxInput(inputId = "rm.tax.pref",
+                                    label = "Remove taxa prefixes"),
                                
-                                 checkboxInput(inputId = "rank.from.pref",
-                                     label = "Derive taxa from prefixes")
-                             ),
+                                checkboxInput(inputId = "rank.from.pref",
+                                    label = "Derive taxa from prefixes")
+                            ),
                              
-                             conditionalPanel(
-                                 condition = "input.ftype == 'MetaPhlAn'",
+                            conditionalPanel(
+                                condition = "input.ftype == 'MetaPhlAn'",
                                
-                                 fileInput(inputId = "col.data", label = "colData:",
-                                     accept = ".tsv"),
+                                fileInput(inputId = "col.data", label = "colData:",
+                                    accept = ".tsv"),
                                  
-                                 fileInput(inputId = "tree.file", label = "Tree:",
-                                     accept = ".tree")
-                             )
+                                fileInput(inputId = "tree.file", label = "Tree:",
+                                    accept = ".tree")
+                            )
                                    
-                          )
+                        )
                           
-                      ),
+                    ),
               
-                  actionButton("import", "Upload", class = "btn-success",
-                      style = .actionbutton_biocstyle)
+                    actionButton("import", "Upload", class = "btn-success",
+                        style = .actionbutton_biocstyle)
                 
-                )),
+            )),
             
             column(4, wellPanel(id = "manipulate.panel",
               
-              titlePanel("Manipulate"),
+                titlePanel("Manipulate"),
               
-              tabsetPanel(id = "manipulate",
+                tabsetPanel(id = "manipulate",
                           
-                  tabPanel(title = "Subset", value = "subset",
+                    tabPanel(title = "Subset", value = "subset",
                       
-                      radioButtons(inputId = "subkeep", label = "Keep:",
-                          choices = c("prevalent", "rare"), inline = TRUE),
+                        radioButtons(inputId = "subkeep", label = "Keep:",
+                            choices = c("prevalent", "rare"), inline = TRUE),
                       
-                      selectInput(inputId = "subassay", label = "Assay:",
-                          choices = NULL),
+                        selectInput(inputId = "subassay", label = "Assay:",
+                            choices = NULL),
                       
-                      sliderInput(inputId = "prevalence", value = 0,
-                          label = "Prevalence threshold:", step = 0.01,
-                          min = 0, max = 1),
+                        sliderInput(inputId = "prevalence", value = 0,
+                            label = "Prevalence threshold:", step = 0.01,
+                            min = 0, max = 1),
                       
-                      numericInput(inputId = "detection", value = 0,
-                          label = "Detection threshold:", min = 0, step = 1)
+                        numericInput(inputId = "detection", value = 0,
+                            label = "Detection threshold:", min = 0, step = 1)
                            
-                  ),
+                    ),
                   
-                  tabPanel(title = "Agglomerate", value = "agglomerate",
+                    tabPanel(title = "Agglomerate", value = "agglomerate",
                   
-                      selectInput(inputId = "taxrank", label = "Taxonomic rank:",
-                          choices = NULL)         
+                        selectInput(inputId = "taxrank",
+                            label = "Taxonomic rank:", choices = NULL)         
                         
-                  ),
+                    ),
                   
-                  tabPanel(title = "Transform", value = "transform",
+                    tabPanel(title = "Transform", value = "transform",
                   
-                      selectInput(inputId = "assay.type", label = "Assay:",
-                          choices = NULL),
+                        selectInput(inputId = "assay.type", label = "Assay:",
+                            choices = NULL),
               
-                      selectInput(inputId = "trans.method", label = "Method:",
-                          choices = c("relabundance", "clr", "standardize")),
+                        selectInput(inputId = "trans.method", label = "Method:",
+                            choices = c("relabundance", "clr", "standardize")),
               
-                      checkboxInput(inputId = "pseudocount",
-                          label = "Pseudocount"),
+                        checkboxInput(inputId = "pseudocount",
+                            label = "Pseudocount"),
               
-                      textInput(inputId = "assay.name", label = "Name:"),
+                        textInput(inputId = "assay.name", label = "Name:"),
                       
-                      radioButtons(inputId = "margin", label = "Margin:",
-                          choices = c("samples", "features"), inline = TRUE)
+                        radioButtons(inputId = "margin", label = "Margin:",
+                            choices = c("samples", "features"), inline = TRUE)
                   
-              )),
+                )),
               
-              actionButton("apply", "Apply", class = "btn-success",
-                  style = .actionbutton_biocstyle)
+                actionButton("apply", "Apply", class = "btn-success",
+                    style = .actionbutton_biocstyle)
             
             )),
             
             column(4, wellPanel(id = "estimate.panel",
               
-              titlePanel("Estimate"),
+                titlePanel("Estimate"),
               
-              tabsetPanel(id = "estimate",
+                tabsetPanel(id = "estimate",
                           
-                  tabPanel(title = "Alpha", value = "alpha",
+                    tabPanel(title = "Alpha", value = "alpha",
                            
-                      selectInput(inputId = "alpha.assay", label = "Assay:",
-                          choices = NULL),
+                        selectInput(inputId = "alpha.assay", label = "Assay:",
+                            choices = NULL),
                       
-                      selectInput(inputId = "alpha.index", label = "Metric:",
-                          choices = c("coverage", "shannon", "faith"),
-                          multiple = TRUE),
+                        selectInput(inputId = "alpha.index", label = "Metric:",
+                            choices = c("coverage", "shannon", "faith"),
+                            multiple = TRUE),
                       
-                      textInput(inputId = "alpha.name", label = "Name:")
+                        textInput(inputId = "alpha.name", label = "Name:")
                            
-                  ),
+                    ),
                   
-                  tabPanel(title = "Beta", value = "beta",
+                    tabPanel(title = "Beta", value = "beta",
                            
-                      radioButtons(inputId = "bmethod", label = "Method:",
-                          choices = c("MDS", "NMDS", "PCA", "RDA"), inline = TRUE),
+                        radioButtons(inputId = "bmethod", label = "Method:",
+                            choices = c("MDS", "NMDS", "PCA", "RDA"),
+                            inline = TRUE),
                          
-                           
-                      selectInput(inputId = "beta.assay", label = "Assay:",
-                          choices = NULL),
+                        selectInput(inputId = "beta.assay", label = "Assay:",
+                            choices = NULL),
                       
-                      conditionalPanel(
-                          condition = "input.bmethod != 'PCA'",
+                        conditionalPanel(
+                            condition = "input.bmethod != 'PCA'",
                         
-                          selectInput(inputId = "beta.index", label = "Metric:",
-                              choices = c("euclidean", "bray", "jaccard", "unifrac")),
-                      ),
+                            selectInput(inputId = "beta.index", label = "Metric:",
+                                choices = c("euclidean", "bray", "jaccard", "unifrac")),
+                        ),
                       
-                      conditionalPanel(
-                          condition = "input.bmethod == 'RDA'",
+                        conditionalPanel(
+                            condition = "input.bmethod == 'RDA'",
                         
-                          textInput(inputId = "rda.formula", label = "Formula:",
-                              placeholder = "data ~ var1 + var2 * var3"),
-                      ),
+                            textInput(inputId = "rda.formula", label = "Formula:",
+                                placeholder = "data ~ var1 + var2 * var3"),
+                        ),
                       
-                      numericInput(inputId = "ncomponents", value = 5,
-                          label = "Number of components:", min = 1, step = 1),
+                        numericInput(inputId = "ncomponents", value = 5,
+                            label = "Number of components:", min = 1, step = 1),
                       
-                      textInput(inputId = "beta.name", label = "Name:")
+                        textInput(inputId = "beta.name", label = "Name:")
                                   
-                  )
+                    )
                   
-              ),
+                ),
               
-              actionButton("compute", "Compute", class = "btn-success",
-                  style = .actionbutton_biocstyle)
+                actionButton("compute", "Compute", class = "btn-success",
+                    style = .actionbutton_biocstyle)
               
             ))),
   
-            fluidRow(
-              
-              column(4, wellPanel(id = "visualise.panel",
+            fluidRow(column(4, wellPanel(id = "visualise.panel",
                 
                 titlePanel("Visualise"),
                 
@@ -223,19 +219,19 @@
                 actionButton("launch", "Launch iSEE", class = "btn-success",
                     style = .actionbutton_biocstyle)
                 
-              )),
+                )),
               
-              column(8, wellPanel(id = "output.panel",
+            column(8, wellPanel(id = "output.panel",
               
-              titlePanel("Output"),
+                titlePanel("Output"),
               
-              verbatimTextOutput(outputId = "object"),
+                verbatimTextOutput(outputId = "object"),
               
-              downloadButton(outputId = "download", label = "Download",
-                  style = .actionbutton_biocstyle)
+                downloadButton(outputId = "download", label = "Download",
+                    style = .actionbutton_biocstyle)
               
-            )))
-          )
+            ))
+        ))
     })
     
     ## Disable navbar buttons that are not linked to any observer yet

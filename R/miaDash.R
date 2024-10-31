@@ -44,6 +44,7 @@ miaDash <- function() {
 #' @importFrom SingleCellExperiment reducedDims
 .launch_isee <- function(FUN, initial, session, rObjects) {
 
+    # nocov start
     tse <- rObjects$tse
   
     initial <- lapply(initial, function(x) eval(parse(text = paste0(x, "()"))))
@@ -68,4 +69,5 @@ miaDash <- function() {
     enable("iSEE_INTERNAL_citation_info")    # citation info
   
     invisible(NULL)
+    # nocov end
 }

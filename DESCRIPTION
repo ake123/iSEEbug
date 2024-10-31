@@ -44,8 +44,6 @@ Suggests:
     remotes,
     rmarkdown,
     testthat (>= 3.0.0)
-Remotes:
-    github::microbiome/iSEEtree
 URL: https://github.com/RiboRings/miaDash
 BugReports: https://github.com/RiboRings/miaDash/issues
 Roxygen: list(markdown = TRUE)

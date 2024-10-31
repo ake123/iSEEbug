@@ -31,9 +31,20 @@ knitr::opts_chunk$set(
 
 # Introduction
 
+The Microbiome Analysis Dashboard (miaDash) aims to make microbiome analysis
+accessible to anyone, with or without programming skills.
+
 ## Motivation
 
 ## Interface
+
+The interface provides tools to:
+
+- import from datasets from several file types or practice with a ready-made
+  mia dataset
+- manipulate objects as subsetting, agglomeration and transformation
+- estimate alpha and beta diversity
+- visualise different aspects with iSEEtree
 
 # Tutorial
 
@@ -68,7 +79,8 @@ SCREENSHOT("screenshots/get_started.png", delay = 20)
 
 ## Citation
 
-We hope that miaDash will be useful for your research. Please use the following information to cite the package and the overall approach. Thank you!
+We hope that miaDash will be useful for your research. Please use the following
+information to cite the package and the overall approach. Thank you!
 
 ```{r citation}
 ## Citation info

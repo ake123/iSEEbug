@@ -16,9 +16,11 @@
 #' @importFrom shiny renderPrint
 .render_overview <- function(output, rObjects) {
   
+    # nocov start
     output$object <- renderPrint({
         rObjects$tse
     })
+    # nocov end
 
     invisible(NULL)
 }
@@ -27,10 +29,12 @@
 #' @importFrom shiny downloadHandler
 .render_download <- function(output, rObjects) {
   
+    # nocov start
     output$download <- downloadHandler(
         filename = function() paste0("se-", Sys.Date(), ".rds"),
         content = function(file) saveRDS(rObjects$tse, file)
     )
+    # nocov end
   
     invisible(NULL)
 }
