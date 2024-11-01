@@ -22,6 +22,7 @@
 #' @importFrom TreeSummarizedExperiment TreeSummarizedExperiment
 .create_import_observers <- function(input, rObjects) {
   
+    # nocov start
     observeEvent(input$import, {
       
         if( input$format == "dataset" ){
@@ -100,6 +101,7 @@
         }
       
     }, ignoreInit = TRUE, ignoreNULL = FALSE)
+    # nocov end
   
     invisible(NULL)
 }
@@ -111,6 +113,7 @@
 #'   transformAssay
 .create_manipulate_observers <- function(input, rObjects) {
   
+    # nocov start
     observeEvent(input$apply, {
       
         if( input$manipulate == "subset" ){
@@ -172,6 +175,7 @@
         }
       
     }, ignoreInit = TRUE, ignoreNULL = TRUE)
+    # nocov end
   
     invisible(NULL)
 }
@@ -185,6 +189,7 @@
 #' @importFrom vegan vegdist
 .create_estimate_observers <- function(input, rObjects) {
   
+    # nocov start
     observeEvent(input$compute, {
         
         if( input$estimate == "alpha" ){
@@ -269,6 +274,7 @@
         }
         
     }, ignoreInit = TRUE, ignoreNULL = TRUE)
+    # nocov end
   
     invisible(NULL)
 }
@@ -280,6 +286,7 @@
 #' @importFrom rintrojs introjs
 .update_observers <- function(input, session, rObjects){
   
+    # nocov start
     observe({
       
       if( isS4(rObjects$tse) ){
@@ -311,6 +318,7 @@
         introjs(session, options = list(steps = .landing_page_tour))
       
     }, ignoreInit = TRUE)
+    # nocov end
     
     invisible(NULL)
 }

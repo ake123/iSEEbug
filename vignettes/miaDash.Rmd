@@ -29,25 +29,90 @@ knitr::opts_chunk$set(
 )
 ```
 
+```{r vignetteSetup, echo=FALSE, message=FALSE, warning=FALSE}
+## Bib setup
+library(RefManageR)
+
+## Write bibliography information
+bib <- c(
+    R = citation(),
+    mia = citation("mia")[1],
+    iSEEtree = citation("iSEEtree")[1],
+    iSEE = citation("iSEE")[1],
+    TreeSummarizedExperiment = citation("TreeSummarizedExperiment")[1],
+    shiny = citation("shiny")[1]
+)
+```
+
 # Introduction
+
+This notebook provides a practical introduction to the Microbiome Analysis
+Dashboard (miaDash), an interactive app to analyse and explore microbiome data.
+Feel free to try it online at
+[this address](https://iseebug-iseebug.2.rahtiapp.fi/) with your data or one of
+the ready-to-use example datasets. Here, its usage and functionality are
+described in more detail.
 
 ## Motivation
 
+Most of the tools available for microbiome data analysis require some knowledge
+of programming. This represents a burden for practitioners more interested
+in getting results than learning how to program. To this end, miaDash aims to
+make microbiome analysis accessible to anyone who needs it, with or without any
+computational skills.
+
+As a word of caution, while the app removes the burden of programming, it is
+still critical to understand the nature of microbiome data and how it can be
+analysed. Such knowledge can be acquired from the online book [Orchestrating
+Microbiome Analysis](https://microbiome.github.io/OMA/) (OMA) and several other
+independent resources. The following section presents what is currently possible
+in the app.
+
 ## Interface
+
+The interface is divided into five tabs that reflect the steps of a typical
+microbiome analysis pipeline. First, the dataset of interest can be uploaded
+through the Import tab, where several data types and file formats are supported.
+Alternatively, one of the available example datasets can be used for practice.
+Second, a set of operations can be applied to the dataset through the
+Manipulate tab, which include methods for subsetting features by prevalence,
+agglomerating by taxonomic level and transforming assays. Third, the dataset
+can be analysed through the Estimate tab, which provide common techniques to
+quantify alpha and beta diversity. Finally, results can be explored through the
+Visualise tab, where an interactive explorer can be launched with a customisable
+set of panels that illustrate different aspects of the data.
 
 # Tutorial
 
+The app can be used online or locally, depending on resource availability and
+size of the dataset to analyse. In general, the online version is freely
+available, so that data of any type can be tested there. However, running the
+app locally might be a better option for larger datasets (> 1000 features). In
+this case, you may also consider subsetting and/or agglomerating the data.
+
 ## Installation
 
+If you decided to run the app locally, make sure to have R installed in your
+machine and execute the following command:
+
 ```{r install, eval=FALSE}
+# Install from GitHub
 remotes::install_github("RiboRings/miaDash")
 ```
 
+Once the package is successfully installed, you should have access to the
+development version of miaDash.
+
 ## Example
 
+This section shows how to get started with miaDash. If you are using it locally,
+run the next code chunk to launch the app. Otherwise, you can skip it.
+
 ```{r start, message=FALSE, warning=FALSE}
+# Import miaDash
 library(miaDash)
 
+# Instantiate app
 app <- miaDash()
 
 # Launch miaDash
@@ -60,15 +125,37 @@ if (interactive()) {
 SCREENSHOT <- function(x, ...) knitr::include_graphics(x)
 ```
 
-```{r screenplot, echo=FALSE, out.width="100%"}
-SCREENSHOT("screenshots/get_started.png", delay = 20)
+As described in Section [1.2](#interface), The dashboard consists of five
+different windows with tools to import, manipulate, analyse and visualise
+the dataset of choice. After launching the app, it appears as follows:
+
+```{r screenplot1, echo=FALSE, out.width="100%"}
+SCREENSHOT("screenshots/dashboard.png", delay = 20)
 ```
+
+At first, the variety of options might feel intimidating, so you can click on
+the question mark on the top right to receive a short tour of the windows
+available in the app.
+
+Once the dataset was imported and analysed according to your objective, you can
+choose which visualisations to use from the Visualise window and press the
+button "Launch iSEEtree" to create and customise the plots. After adjusting the
+parameters of the different panels, the app might look something like this:
+
+```{r screenplot2, echo=FALSE, out.width="100%"}
+SCREENSHOT("screenshots/iSEEtree.png", delay = 20)
+```
+
+As before, you can click on the question mark on the top right to receive a tour
+of the panels and their parameters. The best way to get familiar with the
+interface is to experiment with the parameters below each panel.
 
 # Resources
 
 ## Citation
 
-We hope that miaDash will be useful for your research. Please use the following information to cite the package and the overall approach. Thank you!
+We hope that miaDash will be useful for your research. Please use the following
+information to cite the package and the overall approach. Thank you!
 
 ```{r citation}
 ## Citation info
@@ -77,14 +164,37 @@ citation("miaDash")
 
 ## Background Knowledge
 
+miaDash originates from the joint effort of the R/Bioconductor community. It is
+mainly based on the following software:
+
+- R `r Citep(bib[["R"]])`, statistical programming language
+- `r Biocpkg("mia")` `r Citep(bib[["mia"]])`, framework for microbiome data analysis
+- `r Biocpkg("iSEEtree")` `r Citep(bib[["iSEEtree"]])`, TreeSummarizedExperiment interactive explorer
+- `r Biocpkg("iSEE")` `r Citep(bib[["iSEE"]])`, SummarizedExperiment interactive explorer
+- `r Biocpkg("TreeSummarizedExperiment")` `r Citep(bib[["TreeSummarizedExperiment"]])`, S4 container for hierarchical data
+- `r CRANpkg("shiny")` `r Citep(bib[["shiny"]])`, web app development in R
+
 ## Help
+
+You can reach us by one of the communication channels listed
+[here](https://microbiome.github.io/OMA/docs/devel/pages/support.html). We are
+happy to receive questions, suggestions as well as contributions. For the last
+point, check the
+[contributor guidelines](https://microbiome.github.io/mia/CONTRIBUTING.html).
 
 # Reproducibility
 
 R session information:
 
 ```{r reproduce, echo=FALSE}
-## Session info
+# Session info
 options(width = 120)
 sessionInfo()
+```
+
+# References
+
+```{r vignetteBiblio, results="asis", echo=FALSE, warning=FALSE, message=FALSE}
+# Print bibliography
+PrintBibliography(bib, .opts = list(hyperlink = "to.doc", style = "html"))
 ```

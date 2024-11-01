@@ -1,6 +1,5 @@
 FROM bioconductor/bioconductor_docker:devel
 
-MAINTAINER giulio.benedetti@utu.fi
 LABEL authors="giulio.benedetti@utu.fi" \
     description="Docker image containing the miaDash package in a bioconductor/bioconductor_docker:devel container."
 

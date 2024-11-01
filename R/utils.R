@@ -1,12 +1,21 @@
-default_panels <- c("RowDataTable", "ColumnDataTable", "RowTreePlot",
-                    "AbundancePlot", "AbundanceDensityPlot", "ReducedDimensionPlot",
-                    "ComplexHeatmapPlot")
+#' Utilities
+#' 
+#' Helper functions and constants to support the app functionality.
+#'
+#' @name utils
+#' @keywords internal
 
-other_panels <- c("LoadingPlot", "ColumnTreePlot", "RDAPlot", "ColumnDataPlot",
-                  "RowDataPlot")
+#' @rdname utils
+.import_datasets <- function(selection) {
+  
+    mia_datasets <- data(package = "mia")
+    mia_datasets <- mia_datasets$results[selection, "Item"]
+    data(list = mia_datasets, package = "mia")
+    
+    return(mia_datasets)
+}
 
-.actionbutton_biocstyle <- "color: #ffffff; background-color: #0092AC; border-color: #2e6da4"
-
+#' @rdname utils
 #' @importFrom shiny showModal modalDialog
 .print_message <- function(...){
 
@@ -17,6 +26,7 @@ other_panels <- c("LoadingPlot", "ColumnTreePlot", "RDAPlot", "ColumnDataPlot",
   
 }
 
+#' @rdname utils
 #' @importFrom SummarizedExperiment colData
 .check_formula <- function(form, se){
   
@@ -27,6 +37,7 @@ other_panels <- c("LoadingPlot", "ColumnTreePlot", "RDAPlot", "ColumnDataPlot",
     return(cond)
 }
 
+#' @rdname utils
 #' @importFrom S4Vectors isEmpty
 #' @importFrom methods is
 .check_panel <- function(se, panel_list, panel_class, panel_fun, wtext) {
@@ -41,3 +52,15 @@ other_panels <- c("LoadingPlot", "ColumnTreePlot", "RDAPlot", "ColumnDataPlot",
   
   return(panel_list)
 }
+
+#' @rdname utils
+default_panels <- c("RowDataTable", "ColumnDataTable", "RowTreePlot",
+                    "AbundancePlot", "AbundanceDensityPlot", "ReducedDimensionPlot",
+                    "ComplexHeatmapPlot")
+
+#' @rdname utils
+other_panels <- c("LoadingPlot", "ColumnTreePlot", "RDAPlot", "ColumnDataPlot",
+                  "RowDataPlot")
+
+#' @rdname utils
+.actionbutton_biocstyle <- "color: #ffffff; background-color: #0092AC; border-color: #2e6da4"
