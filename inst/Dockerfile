@@ -1,4 +1,4 @@
-FROM ghcr.io/riborings/iseebug:devel
+FROM ghcr.io/microbiome/miadash:devel
 
 LABEL authors="giulio.benedetti@utu.fi" \
     description="Docker image containing the miaDash package."
