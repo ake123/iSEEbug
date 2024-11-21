@@ -4,6 +4,7 @@
 \name{utils}
 \alias{utils}
 \alias{.import_datasets}
+\alias{.update_tse}
 \alias{.print_message}
 \alias{.check_formula}
 \alias{.check_panel}
@@ -21,7 +22,9 @@ An object of class \code{character} of length 1.
 \usage{
 .import_datasets(selection)
 
-.print_message(...)
+.update_tse(fun, fun_args)
+
+.print_message(..., title = "Invalid input:")
 
 .check_formula(form, se)
 

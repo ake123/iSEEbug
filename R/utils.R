@@ -16,11 +16,33 @@
 }
 
 #' @rdname utils
+#' @importFrom shiny showNotification
+.update_tse <- function(fun, fun_args) {
+  
+    messages <- c()
+  
+    withCallingHandlers({
+      
+        tse <- do.call(fun, fun_args)
+      
+    }, message = function(m) {
+      
+        messages <<- c(messages, conditionMessage(m))
+        invokeRestart("muffleMessage")
+    
+    })
+  
+    lapply(messages, showNotification)
+  
+    return(tse)
+}
+
+#' @rdname utils
 #' @importFrom shiny showModal modalDialog
-.print_message <- function(...){
+.print_message <- function(..., title = "Invalid input:"){
 
     showModal(modalDialog(
-        title = "Invalid input:", paste(...),
+        title = title, ...,
         easyClose = TRUE, footer = NULL
     ))
   
