@@ -246,6 +246,17 @@
     
     rObjects <- reactiveValues(tse = NULL)
     
+    observe({
+        .print_message(
+            title = "Welcome to the Microbiome Analysis Dashboard!",
+            "miaDash is actively maintained, so we are happy to receive",
+            "feedback from you. Feature requests, bug reports and other",
+            "comments can be submitted",
+            tags$a(href = "https://github.com/microbiome/miaDash/issues",
+            "here", target = "_blank", .noWS = "after"), ".",
+        )
+    })
+    
     .create_import_observers(input, rObjects)
     .create_manipulate_observers(input, rObjects)
     .create_estimate_observers(input, rObjects)

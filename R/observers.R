@@ -59,9 +59,11 @@
                 }
                 
                 names(assay_list) <- gsub(".csv", "", input$assay$name)
+                
+                fun_args <- list(assays = assay_list, colData = coldata,
+                    rowData = rowdata)
         
-                rObjects$tse <- TreeSummarizedExperiment(assays = assay_list,
-                    colData = coldata, rowData = rowdata)
+                rObjects$tse <- .update_tse(TreeSummarizedExperiment, fun_args)
             })
       
         }else if( input$format == "foreign" ){
@@ -72,10 +74,12 @@
                 if( input$ftype == "biom" ){
               
                     biom_object <- read_biom(input$main.file$datapath)
-                
-                    rObjects$tse <- convertFromBIOM(biom_object,
+                    
+                    fun_args <- list(x = biom_object,
                         removeTaxaPrefixes = input$rm.tax.pref,
                         rankFromPrefix = input$rank.from.pref)
+                
+                    rObjects$tse <- .update_tse(convertFromBIOM, fun_args)
               
                 } else if( input$ftype == "MetaPhlAn" ){
                   
@@ -90,9 +94,11 @@
                     } else {
                         treefile <- NULL
                     }
+                  
+                    fun_args <- list(file = input$main.file$datapath,
+                        col.data = coldata, tree.file = treefile)
               
-                    rObjects$tse <- importMetaPhlAn(input$main.file$datapath,
-                        col.data = coldata, tree.file = treefile) 
+                    rObjects$tse <- .update_tse(importMetaPhlAn, fun_args) 
                  
                 }
         
@@ -124,12 +130,13 @@
                 if( input$subkeep == "prevalent" ){
                     subset_fun <- subsetByPrevalent
                 } else if( input$subkeep == "rare" ){
-                  subset_fun <- subsetByRare
+                    subset_fun <- subsetByRare
                 }
             
-                rObjects$tse <- subset_fun(rObjects$tse,
-                    assay.type = input$subassay, prevalence = input$prevalence,
-                    detection = input$detection)
+                fun_args <- list(x = rObjects$tse, assay.type = input$subassay,
+                    prevalence = input$prevalence, detection = input$detection)
+                
+                rObjects$tse <- .update_tse(subset_fun, fun_args)
               
             })
           
@@ -139,8 +146,8 @@
           
             isolate({
                 
-                rObjects$tse <- agglomerateByRank(rObjects$tse,
-                    rank = input$taxrank)
+                fun_args <- list(x = rObjects$tse, rank = input$taxrank)
+                rObjects$tse <- .update_tse(agglomerateByRank, fun_args)
               
             })
           
@@ -165,11 +172,13 @@
                 } else {
                     name <- input$trans.method
                 }
-
-                rObjects$tse <- transformAssay(rObjects$tse, name = name,
-                    assay.type = input$assay.type, method = input$trans.method,
-                    pseudocount = input$pseudocount, MARGIN = input$margin)
-            
+              
+                fun_args <- list(x = rObjects$tse, name = name,
+                    method = input$trans.method, assay.type = input$assay.type,
+                    MARGIN = input$margin, pseudocount = input$pseudocount)
+                
+                rObjects$tse <- .update_tse(transformAssay, fun_args)
+                
             })
           
         }
@@ -208,8 +217,10 @@
                     name <- input$alpha.index
                 }
           
-                rObjects$tse <- addAlpha(rObjects$tse, name = name,
+                fun_args <- list(x = rObjects$tse, name = name,
                     assay.type = input$alpha.assay, index = input$alpha.index)
+                
+                rObjects$tse <- .update_tse(addAlpha, fun_args)
           
             })
         
@@ -267,7 +278,7 @@
                 }
               
                 beta_fun <- eval(parse(text = paste0("run", input$bmethod)))
-                rObjects$tse <- do.call(beta_fun, beta_args)
+                rObjects$tse <- .update_tse(beta_fun, beta_args)
               
             })
         
