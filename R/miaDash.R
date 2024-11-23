@@ -27,7 +27,9 @@ miaDash <- function() {
 
     iSEE(
         landingPage = .landing_page,
-        appTitle = sprintf("Microbiome Analysis Dashboard - v%s", packageVersion("miaDash"))
+        appTitle = tags$div(style = "cursor: pointer", 
+            onclick = "window.open('https://miadash-microbiome.2.rahtiapp.fi/', '_blank')", 
+            paste0("Microbiome Analysis Dashboard - v", packageVersion("miaDash"), " 🦠"))
     )
 
 }
