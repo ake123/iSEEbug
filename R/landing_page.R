@@ -255,13 +255,13 @@
             ", so we are happy to receive feedback from you. Feature requests,",
             "bug reports and other comments can be submitted",
             tags$a(href = "https://github.com/microbiome/miaDash/issues",
-            "here", target = "_blank", .noWS = "after"),
-            ", whereas support can be obtained on",
-            tags$a(href = "https://app.gitter.im/#/room/#microbiome_miaverse:gitter.im",
-            "our Gitter channel", target = "_blank", .noWS = "after"), HTML(".<br/><br/>"),
+            "here", target = "_blank", .noWS = "after"), HTML(".<br/><br/>"),
             "If you are new here, you can learn how to use the app with",
             tags$a(href = "https://microbiome.github.io/miaDash/articles/miaDash.html",
-            "this short tutorial", target = "_blank", .noWS = "after"), "."
+            "this short tutorial", target = "_blank", .noWS = "after"),
+            ". Technical support can be obtained on",
+            tags$a(href = "https://app.gitter.im/#/room/#microbiome_miaverse:gitter.im",
+            "our Gitter channel", target = "_blank", .noWS = "after"), "." 
         )
     })
     
