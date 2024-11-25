@@ -1,4 +1,4 @@
-test_that(".create_observers works", {
+test_that("observers", {
   
   input <- new.env()
   rObjects <- new.env()

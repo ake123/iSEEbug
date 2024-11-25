@@ -19,9 +19,9 @@
 #' @importFrom utils data
 .landing_page <- function(FUN, input, output, session) {
   
+    # nocov start
     mia_datasets <- .import_datasets(-c(2, 5))
   
-    # nocov start
     output$allPanels <- renderUI({
 
         fluidPage(

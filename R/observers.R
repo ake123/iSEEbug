@@ -338,11 +338,13 @@
 #' @importFrom shiny observeEvent
 .create_launch_observers <- function(FUN, input, session, rObjects) {
   
+    # nocov start
     observeEvent(input$launch, {
     
         .launch_isee(FUN, input$panels, session, rObjects)
 
     }, ignoreInit = TRUE, ignoreNULL = TRUE)
+    # nocov end
   
     invisible(NULL)
 }
