@@ -209,16 +209,16 @@
             }
         
             isolate({
-                req(input$alpha.assay)
+                req(input$estimate.assay)
               
-                if( input$alpha.name != "" ){
-                    name <- input$alpha.name
+                if( input$estimate.name != "" ){
+                    name <- input$estimate.name
                 } else {
                     name <- input$alpha.index
                 }
           
                 fun_args <- list(x = rObjects$tse, name = name,
-                    assay.type = input$alpha.assay, index = input$alpha.index)
+                    assay.type = input$estimate.assay, index = input$alpha.index)
                 
                 rObjects$tse <- .update_tse(addAlpha, fun_args)
           
@@ -237,10 +237,10 @@
             }
           
             isolate({
-                req(input$beta.assay)
+                req(input$estimate.assay)
               
-                if( input$beta.name != "" ){
-                    name <- input$beta.name
+                if( input$estimate.name != "" ){
+                    name <- input$estimate.name
                 } else {
                     name <- input$bmethod
                 }
@@ -311,10 +311,10 @@
           updateSelectInput(session, inputId = "assay.type",
               choices = assayNames(rObjects$tse))
           
-          updateSelectInput(session, inputId = "alpha.assay",
+          updateSelectInput(session, inputId = "estimate.assay",
               choices = assayNames(rObjects$tse))
           
-          updateSelectInput(session, inputId = "beta.assay",
+          updateSelectInput(session, inputId = "estimate.assay",
               choices = assayNames(rObjects$tse))
           
           updateNumericInput(session, inputId = "ncomponents",
