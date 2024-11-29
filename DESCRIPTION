@@ -24,6 +24,7 @@ Depends:
     iSEE
 Imports:
     biomformat,
+    htmltools,
     iSEEtree,
     methods,
     mia,
