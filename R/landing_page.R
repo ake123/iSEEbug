@@ -250,7 +250,7 @@
     
     observe({
         .print_message(
-            title = "Welcome to the Microbiome Analysis Dashboard! 🦠",
+            title = "Welcome to the Microbiome Analysis Dashboard! \U0001f9a0",
             "miaDash is actively maintained by the",
             tags$a(href = "https://datascience.utu.fi/",
             "Turku Data Science Group", target = "_blank", .noWS = "after"),
