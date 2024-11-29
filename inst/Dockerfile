@@ -13,4 +13,4 @@ ADD . /app
 EXPOSE 1234
 
 # Run the script that launches the Shiny app
-CMD Rscript app.R
+CMD ["R", "-e", "library(miaDash); app <- miaDash(); shiny::runApp(app, port = 1234, host = '0.0.0.0')"]

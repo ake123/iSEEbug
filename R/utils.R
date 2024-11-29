@@ -31,21 +31,24 @@
         invokeRestart("muffleMessage")
     
     })
-  
+    
+    # nocov start
     lapply(messages, showNotification)
+    # nocov end
   
     return(tse)
 }
 
 #' @rdname utils
 #' @importFrom shiny showModal modalDialog
-.print_message <- function(..., title = "Invalid input:"){
+.print_message <- function(..., title = "Invalid input:") {
 
+    # nocov start
     showModal(modalDialog(
         title = title, ...,
         easyClose = TRUE, footer = NULL
     ))
-  
+    # nocov end
 }
 
 #' @rdname utils
@@ -64,25 +67,25 @@
 #' @importFrom methods is
 .check_panel <- function(se, panel_list, panel_class, panel_fun, wtext) {
   
-  no_keep <- unlist(lapply(panel_list, function(x) is(x, panel_class)))
+    no_keep <- unlist(lapply(panel_list, function(x) is(x, panel_class)))
   
-  if( any(no_keep) && (is.null(panel_fun(se)) || isEmpty(panel_fun(se))) ){
-    panel_list <- panel_list[!no_keep]
-    warning("no valid ", as.character(substitute(panel_fun)),
+    if( any(no_keep) && (is.null(panel_fun(se)) || isEmpty(panel_fun(se))) ){
+        panel_list <- panel_list[!no_keep]
+        warning("no valid ", as.character(substitute(panel_fun)),
             " fields for ", panel_class, call. = FALSE)
-  }
+    }
   
-  return(panel_list)
+    return(panel_list)
 }
 
 #' @rdname utils
 default_panels <- c("RowDataTable", "ColumnDataTable", "RowTreePlot",
-                    "AbundancePlot", "AbundanceDensityPlot", "ReducedDimensionPlot",
-                    "ComplexHeatmapPlot")
+    "AbundancePlot", "AbundanceDensityPlot", "ReducedDimensionPlot",
+    "ComplexHeatmapPlot")
 
 #' @rdname utils
 other_panels <- c("LoadingPlot", "ColumnTreePlot", "RDAPlot", "ColumnDataPlot",
-                  "RowDataPlot")
+    "RowDataPlot")
 
 #' @rdname utils
 .actionbutton_biocstyle <- "color: #ffffff; background-color: #0092AC; border-color: #2e6da4"
