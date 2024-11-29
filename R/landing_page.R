@@ -31,9 +31,11 @@
             dashboardHeader(disable = TRUE),
             dashboardSidebar(disable = TRUE),
             dashboardBody(
+                
+                tags$head(tags$style(HTML(".btn-primary {color: white;}"))),
               
                 fluidRow(box(id = "import.panel", title = "Import", width = 4,
-                    status = "primary", solidHeader = TRUE,
+                    status = "primary", solidHeader = TRUE, collapsible = TRUE,
 
                     tabsetPanel(id = "format",
                           
@@ -87,8 +89,7 @@
                                 fileInput(inputId = "tree.file",
                                     label = "Tree:", accept = ".tree")))),
               
-                    actionButton("import", "Upload", class = "btn-success",
-                        style = .actionbutton_biocstyle)),
+                    actionButton("import", "Upload", class = "btn-primary")),
             
                 box(id = "manipulate.panel", title = "Manipulate", width = 4,
                     status = "primary", solidHeader = TRUE,
@@ -137,8 +138,7 @@
                                 choices = c("samples", "features"),
                                 inline = TRUE))),
               
-                    actionButton("apply", "Apply", class = "btn-success",
-                        style = .actionbutton_biocstyle)),
+                    actionButton("apply", "Apply", class = "btn-primary")),
             
                 box(id = "estimate.panel", title = "Estimate", width = 4,
                     status = "primary", solidHeader = TRUE,
@@ -185,8 +185,7 @@
                           
                             textInput(inputId = "beta.name", label = "Name:"))),
               
-                    actionButton("compute", "Compute", class = "btn-success",
-                        style = .actionbutton_biocstyle))),
+                    actionButton("compute", "Compute", class = "btn-primary"))),
                 
                 fluidRow(box(id = "visualise.panel", title = "Visualise",
                     width = 4, status = "primary", solidHeader = TRUE,
@@ -195,8 +194,8 @@
                         choices = c(default_panels, other_panels),
                         multiple = TRUE, selected = c(default_panels)),
                 
-                    actionButton("launch", "Launch iSEE", class = "btn-success",
-                        style = .actionbutton_biocstyle)),
+                    actionButton("launch", "Launch iSEE",
+                        class = "btn-primary")),
               
                 box(id = "output.panel", title = "Output", width = 8,
                     status = "primary", solidHeader = TRUE,
@@ -204,7 +203,7 @@
                     verbatimTextOutput(outputId = "object"),
               
                     downloadButton(outputId = "download", label = "Download",
-                        style = .actionbutton_biocstyle)))))})
+                        class = "btn-primary")))))})
     
     ## Disable navbar buttons that are not linked to any observer yet
     disable("iSEE_INTERNAL_organize_panels")  # organize panels
