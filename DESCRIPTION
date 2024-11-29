@@ -1,5 +1,5 @@
 Package: miaDash
-Version: 0.99.1
+Version: 0.99.2
 Authors@R: 
     c(person(given = "Giulio", family = "Benedetti", role = c("aut", "cre"),
            email = "giulio.benedetti@utu.fi",
@@ -30,6 +30,7 @@ Imports:
     rintrojs,
     scater,
     shiny,
+    shinydashboard,
     shinyjs,
     S4Vectors,
     SingleCellExperiment,
