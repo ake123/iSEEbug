@@ -86,6 +86,3 @@ default_panels <- c("RowDataTable", "ColumnDataTable", "RowTreePlot",
 #' @rdname utils
 other_panels <- c("LoadingPlot", "ColumnTreePlot", "RDAPlot", "ColumnDataPlot",
     "RowDataPlot")
-
-#' @rdname utils
-.actionbutton_biocstyle <- "color: #ffffff; background-color: #0092AC; border-color: #2e6da4"

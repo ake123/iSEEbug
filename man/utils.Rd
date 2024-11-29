@@ -10,14 +10,11 @@
 \alias{.check_panel}
 \alias{default_panels}
 \alias{other_panels}
-\alias{.actionbutton_biocstyle}
 \title{Utilities}
 \format{
 An object of class \code{character} of length 7.
 
 An object of class \code{character} of length 5.
-
-An object of class \code{character} of length 1.
 }
 \usage{
 .import_datasets(selection)
@@ -33,8 +30,6 @@ An object of class \code{character} of length 1.
 default_panels
 
 other_panels
-
-.actionbutton_biocstyle
 }
 \description{
 Helper functions and constants to support the app functionality.
