@@ -7,3 +7,10 @@ Changes in version 0.2.0
 * Added estimate functionality
 * Added panel layout customisation
 * Added unit testing
+
+Changes in version 0.99.2
+* Moved to shinydashboard
+
+Changes in version 0.99.3
+* Added tree import option
+* Fixed bugs with RDS and unifrac
