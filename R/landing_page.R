@@ -16,7 +16,7 @@
 #'   conditionalPanel
 #' @importFrom shinydashboard dashboardPage dashboardHeader dashboardSidebar
 #'   dashboardBody box
-#' @importFrom htmltools HTML br tags tagList
+#' @importFrom htmltools HTML br tags div tagList
 #' @importFrom shinyjs disable
 #' @importFrom utils data
 .landing_page <- function(FUN, input, output, session) {
@@ -54,22 +54,36 @@
                                    
                             fileInput(inputId = "assay", label = "Assays:",
                                 accept = ".csv", multiple = TRUE),
+                            div(style = "margin-top: -25px"),
                                    
                             fileInput(inputId = "coldata", label = "colData:",
                                 accept = ".csv"),
-                                   
+                            div(style = "margin-top: -25px"),
+                        
                             fileInput(inputId = "rowdata", label = "rowData:",
-                                accept = ".csv")),
+                                accept = ".csv"),
+                            div(style = "margin-top: -25px"),
+                            
+                            fileInput(inputId = "row.tree",
+                                  label = "rowTree:",
+                                  accept = c(".tree", ".tre")),
+                            div(style = "margin-top: -25px"),
+                
+                            fileInput(inputId = "col.tree",
+                                  label = "colTree:",
+                                  accept = c(".tree", ".tre")),
+                            div(style = "margin-top: -25px")),
                           
                         tabPanel(title = "Foreign", value = "foreign", br(),
                                   
                             radioButtons(inputId = "ftype",
                                 label = "Type:", choices = list("biom", "QZA",
-                                "MetaPhlAn")),
+                                "MetaPhlAn"), inline = TRUE),
                              
                             fileInput(inputId = "main.file",
                                 label = "Main file:", accept = c(".biom",
                                 ".QZA", ".txt")),
+                            div(style = "margin-top: -25px"),
                              
                             conditionalPanel(
                                 condition = "input.ftype == 'biom'",
@@ -85,9 +99,11 @@
                                
                                 fileInput(inputId = "col.data",
                                     label = "colData:", accept = ".tsv"),
+                                div(style = "margin-top: -25px"),
                                  
                                 fileInput(inputId = "tree.file",
-                                    label = "Tree:", accept = ".tree")))),
+                                    label = "Tree:",
+                                    accept = c(".tree", ".tre"))))),
               
                     actionButton("import", "Upload", class = "btn-primary")),
             

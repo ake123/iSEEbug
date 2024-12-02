@@ -15,6 +15,7 @@
 
 #' @rdname create_observers
 #' @importFrom utils read.csv
+#' @importFrom ape read.tree
 #' @importFrom S4Vectors DataFrame
 #' @importFrom shiny isolate observeEvent req
 #' @importFrom biomformat read_biom
@@ -33,8 +34,7 @@
       
             isolate({
                 req(input$file)
-                load(file = input$file$datapath)
-                rObjects$tse <- readRDS(gsub(".rds", "", input$file$name))
+                rObjects$tse <- readRDS(input$file$datapath)
             })
       
         }else if( input$format == "raw" ){
@@ -45,23 +45,20 @@
                 assay_list <- lapply(input$assay$datapath,
                     function(x) as.matrix(read.csv(x, row.names = 1)))
                 
-                if( !is.null(input$coldata) ){
-                    coldata <- read.csv(input$coldata$datapath, row.names = 1)
-                } else {
-                    coldata <- DataFrame(row.names = colnames(assay_list[[1]]))
-                }
-      
-                
-                if( !is.null(input$rowdata) ){
-                    rowdata <- read.csv(input$rowdata$datapath, row.names = 1)
-                } else {
-                    rowdata <- NULL
-                }
-                
                 names(assay_list) <- gsub(".csv", "", input$assay$name)
                 
+                coldata <- .set_optarg(input$coldata$datapath, read.csv,
+                    alternative = DataFrame(row.names = colnames(assay_list[[1]])),
+                    row.names = 1)
+
+                rowdata <- .set_optarg(input$rowdata$datapath, read.csv,
+                    row.names = 1)
+               
+                row.tree <- .set_optarg(input$row.tree$datapath, read.tree)
+                col.tree <- .set_optarg(input$col.tree$datapath, read.tree)
+                
                 fun_args <- list(assays = assay_list, colData = coldata,
-                    rowData = rowdata)
+                    rowData = rowdata, rowTree = row.tree, colTree = col.tree)
         
                 rObjects$tse <- .update_tse(TreeSummarizedExperiment, fun_args)
             })
@@ -250,9 +247,14 @@
               
                 if( input$beta.index == "unifrac" ){
                   
+                    if( is.null(rowTree(rObjects$tse)) ){
+                        .print_message("Unifrac cannot be computed without a rowTree.")
+                        return()
+                    }
+                  
                     beta_args <- c(beta_args, FUN = getDissimilarity,
-                        tree = rowTree(rObjects$tse), ntop = nrow(rObjects$tse),
-                        method = input$beta.index)
+                        tree = list(rowTree(rObjects$tse)),
+                        ntop = nrow(rObjects$tse), method = input$beta.index)
                     
                 } else if( input$bmethod %in% c("MDS", "NMDS") ){
                   
@@ -276,8 +278,9 @@
                         formula = as.formula(input$rda.formula))
                   
                 }
-              
+                print(beta_args)
                 beta_fun <- eval(parse(text = paste0("run", input$bmethod)))
+                print(beta_fun)
                 rObjects$tse <- .update_tse(beta_fun, beta_args)
               
             })

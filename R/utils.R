@@ -52,6 +52,18 @@
 }
 
 #' @rdname utils
+.set_optarg <- function(item, loader, alternative = NULL, ...){
+  
+    if( !is.null(item) ){
+        out <- loader(item, ...)
+    } else {
+        out <- alternative
+    }
+  
+    return(out)
+}
+
+#' @rdname utils
 #' @importFrom SummarizedExperiment colData
 .check_formula <- function(form, se){
   

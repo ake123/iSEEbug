@@ -6,6 +6,7 @@
 \alias{.import_datasets}
 \alias{.update_tse}
 \alias{.print_message}
+\alias{.set_optarg}
 \alias{.check_formula}
 \alias{.check_panel}
 \alias{default_panels}
@@ -22,6 +23,8 @@ An object of class \code{character} of length 5.
 .update_tse(fun, fun_args)
 
 .print_message(..., title = "Invalid input:")
+
+.set_optarg(item, loader, alternative = NULL, ...)
 
 .check_formula(form, se)
 
