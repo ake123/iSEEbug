@@ -16,7 +16,7 @@
 #'   conditionalPanel
 #' @importFrom shinydashboard dashboardPage dashboardHeader dashboardSidebar
 #'   dashboardBody box
-#' @importFrom htmltools HTML br tags
+#' @importFrom htmltools HTML br tags div
 #' @importFrom shinyjs disable
 #' @importFrom utils data
 .landing_page <- function(FUN, input, output, session) {
@@ -31,9 +31,11 @@
             dashboardHeader(disable = TRUE),
             dashboardSidebar(disable = TRUE),
             dashboardBody(
+                
+                tags$head(tags$style(HTML(".btn-primary {color: white;}"))),
               
                 fluidRow(box(id = "import.panel", title = "Import", width = 4,
-                    status = "primary", solidHeader = TRUE,
+                    status = "primary", solidHeader = TRUE, collapsible = TRUE,
 
                     tabsetPanel(id = "format",
                           
@@ -52,22 +54,36 @@
                                    
                             fileInput(inputId = "assay", label = "Assays:",
                                 accept = ".csv", multiple = TRUE),
+                            div(style = "margin-top: -25px"),
                                    
                             fileInput(inputId = "coldata", label = "colData:",
                                 accept = ".csv"),
-                                   
+                            div(style = "margin-top: -25px"),
+                        
                             fileInput(inputId = "rowdata", label = "rowData:",
-                                accept = ".csv")),
+                                accept = ".csv"),
+                            div(style = "margin-top: -25px"),
+                            
+                            fileInput(inputId = "row.tree",
+                                  label = "rowTree:",
+                                  accept = c(".tree", ".tre")),
+                            div(style = "margin-top: -25px"),
+                
+                            fileInput(inputId = "col.tree",
+                                  label = "colTree:",
+                                  accept = c(".tree", ".tre")),
+                            div(style = "margin-top: -25px")),
                           
                         tabPanel(title = "Foreign", value = "foreign", br(),
                                   
                             radioButtons(inputId = "ftype",
                                 label = "Type:", choices = list("biom", "QZA",
-                                "MetaPhlAn")),
+                                "MetaPhlAn"), inline = TRUE),
                              
                             fileInput(inputId = "main.file",
                                 label = "Main file:", accept = c(".biom",
                                 ".QZA", ".txt")),
+                            div(style = "margin-top: -25px"),
                              
                             conditionalPanel(
                                 condition = "input.ftype == 'biom'",
@@ -83,12 +99,13 @@
                                
                                 fileInput(inputId = "col.data",
                                     label = "colData:", accept = ".tsv"),
+                                div(style = "margin-top: -25px"),
                                  
                                 fileInput(inputId = "tree.file",
-                                    label = "Tree:", accept = ".tree")))),
+                                    label = "Tree:",
+                                    accept = c(".tree", ".tre"))))),
               
-                    actionButton("import", "Upload", class = "btn-success",
-                        style = .actionbutton_biocstyle)),
+                    actionButton("import", "Upload", class = "btn-primary")),
             
                 box(id = "manipulate.panel", title = "Manipulate", width = 4,
                     status = "primary", solidHeader = TRUE,
@@ -137,8 +154,7 @@
                                 choices = c("samples", "features"),
                                 inline = TRUE))),
               
-                    actionButton("apply", "Apply", class = "btn-success",
-                        style = .actionbutton_biocstyle)),
+                    actionButton("apply", "Apply", class = "btn-primary")),
             
                 box(id = "estimate.panel", title = "Estimate", width = 4,
                     status = "primary", solidHeader = TRUE,
@@ -185,8 +201,7 @@
                           
                             textInput(inputId = "beta.name", label = "Name:"))),
               
-                    actionButton("compute", "Compute", class = "btn-success",
-                        style = .actionbutton_biocstyle))),
+                    actionButton("compute", "Compute", class = "btn-primary"))),
                 
                 fluidRow(box(id = "visualise.panel", title = "Visualise",
                     width = 4, status = "primary", solidHeader = TRUE,
@@ -195,8 +210,8 @@
                         choices = c(default_panels, other_panels),
                         multiple = TRUE, selected = c(default_panels)),
                 
-                    actionButton("launch", "Launch iSEE", class = "btn-success",
-                        style = .actionbutton_biocstyle)),
+                    actionButton("launch", "Launch iSEE",
+                        class = "btn-primary")),
               
                 box(id = "output.panel", title = "Output", width = 8,
                     status = "primary", solidHeader = TRUE,
@@ -204,7 +219,7 @@
                     verbatimTextOutput(outputId = "object"),
               
                     downloadButton(outputId = "download", label = "Download",
-                        style = .actionbutton_biocstyle)))))})
+                        class = "btn-primary")))))})
     
     ## Disable navbar buttons that are not linked to any observer yet
     disable("iSEE_INTERNAL_organize_panels")  # organize panels

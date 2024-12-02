@@ -6,18 +6,16 @@
 \alias{.import_datasets}
 \alias{.update_tse}
 \alias{.print_message}
+\alias{.set_optarg}
 \alias{.check_formula}
 \alias{.check_panel}
 \alias{default_panels}
 \alias{other_panels}
-\alias{.actionbutton_biocstyle}
 \title{Utilities}
 \format{
 An object of class \code{character} of length 7.
 
 An object of class \code{character} of length 5.
-
-An object of class \code{character} of length 1.
 }
 \usage{
 .import_datasets(selection)
@@ -26,6 +24,8 @@ An object of class \code{character} of length 1.
 
 .print_message(..., title = "Invalid input:")
 
+.set_optarg(item, loader, alternative = NULL, ...)
+
 .check_formula(form, se)
 
 .check_panel(se, panel_list, panel_class, panel_fun, wtext)
@@ -33,8 +33,6 @@ An object of class \code{character} of length 1.
 default_panels
 
 other_panels
-
-.actionbutton_biocstyle
 }
 \description{
 Helper functions and constants to support the app functionality.

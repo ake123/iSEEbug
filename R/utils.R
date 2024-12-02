@@ -52,6 +52,18 @@
 }
 
 #' @rdname utils
+.set_optarg <- function(item, loader, alternative = NULL, ...){
+  
+    if( !is.null(item) ){
+        out <- loader(item, ...)
+    } else {
+        out <- alternative
+    }
+  
+    return(out)
+}
+
+#' @rdname utils
 #' @importFrom SummarizedExperiment colData
 .check_formula <- function(form, se){
   
@@ -86,6 +98,3 @@ default_panels <- c("RowDataTable", "ColumnDataTable", "RowTreePlot",
 #' @rdname utils
 other_panels <- c("LoadingPlot", "ColumnTreePlot", "RDAPlot", "ColumnDataPlot",
     "RowDataPlot")
-
-#' @rdname utils
-.actionbutton_biocstyle <- "color: #ffffff; background-color: #0092AC; border-color: #2e6da4"
