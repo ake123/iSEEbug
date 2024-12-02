@@ -47,15 +47,18 @@
                 
                 names(assay_list) <- gsub(".csv", "", input$assay$name)
                 
-                coldata <- .set_optarg(input$coldata$datapath, read.csv,
+                coldata <- .set_optarg(input$coldata$datapath,
                     alternative = DataFrame(row.names = colnames(assay_list[[1]])),
-                    row.names = 1)
+                    loader = read.csv, row.names = 1)
 
-                rowdata <- .set_optarg(input$rowdata$datapath, read.csv,
-                    row.names = 1)
+                rowdata <- .set_optarg(input$rowdata$datapath,
+                    loader = read.csv, row.names = 1)
                
-                row.tree <- .set_optarg(input$row.tree$datapath, read.tree)
-                col.tree <- .set_optarg(input$col.tree$datapath, read.tree)
+                row.tree <- .set_optarg(input$row.tree$datapath,
+                    loader = read.tree)
+                
+                col.tree <- .set_optarg(input$col.tree$datapath,
+                    loader = read.tree)
                 
                 fun_args <- list(assays = assay_list, colData = coldata,
                     rowData = rowdata, rowTree = row.tree, colTree = col.tree)
@@ -80,17 +83,10 @@
               
                 } else if( input$ftype == "MetaPhlAn" ){
                   
-                    if( !is.null(input$col.data) ){
-                        coldata <- input$col.data$datapath
-                    } else {
-                        coldata <- NULL
-                    }
-                  
-                    if( !is.null(input$tree.file) ){
-                        treefile <- input$tree.file$datapath
-                    } else {
-                        treefile <- NULL
-                    }
+                    coldata <- .set_optarg(input$col.data$datapath,
+                        alternative = input$col.data$datapath)
+                    
+                    treefile <- .set_optarg(input$tree.file$datapath)
                   
                     fun_args <- list(file = input$main.file$datapath,
                         col.data = coldata, tree.file = treefile)

@@ -54,25 +54,25 @@
                                    
                             fileInput(inputId = "assay", label = "Assays:",
                                 accept = ".csv", multiple = TRUE),
-                            div(style = "margin-top: -25px"),
+                            div(style = "margin-top: -20px"),
                                    
                             fileInput(inputId = "coldata", label = "colData:",
                                 accept = ".csv"),
-                            div(style = "margin-top: -25px"),
+                            div(style = "margin-top: -20px"),
                         
                             fileInput(inputId = "rowdata", label = "rowData:",
                                 accept = ".csv"),
-                            div(style = "margin-top: -25px"),
+                            div(style = "margin-top: -20px"),
                             
                             fileInput(inputId = "row.tree",
                                   label = "rowTree:",
                                   accept = c(".tree", ".tre")),
-                            div(style = "margin-top: -25px"),
+                            div(style = "margin-top: -20px"),
                 
                             fileInput(inputId = "col.tree",
                                   label = "colTree:",
                                   accept = c(".tree", ".tre")),
-                            div(style = "margin-top: -25px")),
+                            div(style = "margin-top: -20px")),
                           
                         tabPanel(title = "Foreign", value = "foreign", br(),
                                   
@@ -83,7 +83,7 @@
                             fileInput(inputId = "main.file",
                                 label = "Main file:", accept = c(".biom",
                                 ".QZA", ".txt")),
-                            div(style = "margin-top: -25px"),
+                            div(style = "margin-top: -20px"),
                              
                             conditionalPanel(
                                 condition = "input.ftype == 'biom'",
@@ -99,7 +99,7 @@
                                
                                 fileInput(inputId = "col.data",
                                     label = "colData:", accept = ".tsv"),
-                                div(style = "margin-top: -25px"),
+                                div(style = "margin-top: -20px"),
                                  
                                 fileInput(inputId = "tree.file",
                                     label = "Tree:",
