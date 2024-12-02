@@ -2,7 +2,7 @@
 
 [![issues](https://img.shields.io/github/issues/microbiome/miaDash)](https://github.com/microbiome/miaDash/issues)
 [![pulls](https://img.shields.io/github/issues-pr/microbiome/miaDash)](https://github.com/microbiome/miaDash/pulls)
-[![R-CMD-check](https://github.com/microbiome/miaDash/workflows/rworkflows/badge.svg)](https://github.com/microbiome/miaDash/actions)
+[![R-CMD-check](https://github.com/microbiome/miaDash/workflows/build/badge.svg)](https://github.com/microbiome/miaDash/actions)
 [![codecov](https://codecov.io/gh/microbiome/miaDash/branch/devel/graph/badge.svg)](https://app.codecov.io/gh/microbiome/miaDash?branch=devel)
 [![codefactor](https://www.codefactor.io/repository/github/microbiome/miadash/badge)](https://www.codefactor.io/repository/github/microbiome/miadash)
 
