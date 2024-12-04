@@ -30,7 +30,7 @@ miaDash <- function() {
         landingPage = .landing_page,
         appTitle = tags$div(
             style = "cursor: pointer; font-weight: 500",
-            onclick = "window.open('https://miadash-microbiome.2.rahtiapp.fi/', '_blank')", 
+            onclick = "window.location='https://miadash-microbiome.2.rahtiapp.fi/'", 
             paste0("Microbiome Analysis Dashboard - v",
                 packageVersion("miaDash"), " \U0001f9a0"))
     )
