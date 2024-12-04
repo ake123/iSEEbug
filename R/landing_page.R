@@ -16,7 +16,7 @@
 #'   conditionalPanel
 #' @importFrom shinydashboard dashboardPage dashboardHeader dashboardSidebar
 #'   dashboardBody box
-#' @importFrom htmltools HTML br tags div
+#' @importFrom htmltools HTML br tags div tagList
 #' @importFrom shinyjs disable
 #' @importFrom utils data
 .landing_page <- function(FUN, input, output, session) {
@@ -32,7 +32,7 @@
             dashboardSidebar(disable = TRUE),
             dashboardBody(
                 
-                tags$head(tags$style(HTML(".btn-primary {color: white;}"))),
+                tags$head(tags$style(HTML(".btn-primary {color: white}"))),
               
                 fluidRow(box(id = "import.panel", title = "Import", width = 4,
                     status = "primary", solidHeader = TRUE, collapsible = TRUE,
@@ -54,25 +54,25 @@
                                    
                             fileInput(inputId = "assay", label = "Assays:",
                                 accept = ".csv", multiple = TRUE),
-                            div(style = "margin-top: -25px"),
+                            div(style = "margin-top: -20px"),
                                    
                             fileInput(inputId = "coldata", label = "colData:",
                                 accept = ".csv"),
-                            div(style = "margin-top: -25px"),
+                            div(style = "margin-top: -20px"),
                         
                             fileInput(inputId = "rowdata", label = "rowData:",
                                 accept = ".csv"),
-                            div(style = "margin-top: -25px"),
+                            div(style = "margin-top: -20px"),
                             
                             fileInput(inputId = "row.tree",
                                   label = "rowTree:",
                                   accept = c(".tree", ".tre")),
-                            div(style = "margin-top: -25px"),
+                            div(style = "margin-top: -20px"),
                 
                             fileInput(inputId = "col.tree",
                                   label = "colTree:",
                                   accept = c(".tree", ".tre")),
-                            div(style = "margin-top: -25px")),
+                            div(style = "margin-top: -20px")),
                           
                         tabPanel(title = "Foreign", value = "foreign", br(),
                                   
@@ -83,7 +83,7 @@
                             fileInput(inputId = "main.file",
                                 label = "Main file:", accept = c(".biom",
                                 ".QZA", ".txt")),
-                            div(style = "margin-top: -25px"),
+                            div(style = "margin-top: -20px"),
                              
                             conditionalPanel(
                                 condition = "input.ftype == 'biom'",
@@ -99,7 +99,7 @@
                                
                                 fileInput(inputId = "col.data",
                                     label = "colData:", accept = ".tsv"),
-                                div(style = "margin-top: -25px"),
+                                div(style = "margin-top: -20px"),
                                  
                                 fileInput(inputId = "tree.file",
                                     label = "Tree:",
@@ -108,7 +108,7 @@
                     actionButton("import", "Upload", class = "btn-primary")),
             
                 box(id = "manipulate.panel", title = "Manipulate", width = 4,
-                    status = "primary", solidHeader = TRUE,
+                    status = "primary", solidHeader = TRUE, collapsible = TRUE,
 
                     tabsetPanel(id = "manipulate",
                           
@@ -157,29 +157,25 @@
                     actionButton("apply", "Apply", class = "btn-primary")),
             
                 box(id = "estimate.panel", title = "Estimate", width = 4,
-                    status = "primary", solidHeader = TRUE,
+                    status = "primary", solidHeader = TRUE, collapsible = TRUE,
 
                     tabsetPanel(id = "estimate",
+                                
+                        header = tagList(
+                            br(), selectInput(inputId = "estimate.assay",
+                                label = "Assay:", choices = NULL)),
                           
-                        tabPanel(title = "Alpha", value = "alpha", br(),
-                           
-                            selectInput(inputId = "alpha.assay",
-                                label = "Assay:", choices = NULL),
+                        tabPanel(title = "Alpha", value = "alpha",
                       
                             selectInput(inputId = "alpha.index",
                                 label = "Metric:", multiple = TRUE,
-                                choices = c("coverage", "shannon", "faith")),
-                      
-                            textInput(inputId = "alpha.name", label = "Name:")),
-                  
-                        tabPanel(title = "Beta", value = "beta", br(),
+                                choices = c("coverage", "shannon", "faith"))),
+
+                        tabPanel(title = "Beta", value = "beta",
                            
                             radioButtons(inputId = "bmethod", label = "Method:",
                                 choices = c("MDS", "NMDS", "PCA", "RDA"),
                                 inline = TRUE),
-                         
-                            selectInput(inputId = "beta.assay",
-                                label = "Assay:", choices = NULL),
                       
                             conditionalPanel(
                                 condition = "input.bmethod != 'PCA'",
@@ -197,14 +193,16 @@
                       
                             numericInput(inputId = "ncomponents", value = 5,
                                 label = "Number of components:", min = 1,
-                                step = 1),
-                          
-                            textInput(inputId = "beta.name", label = "Name:"))),
+                                step = 1)),
+                        
+                        footer = textInput(inputId = "estimate.name",
+                            label = "Name:")),
               
                     actionButton("compute", "Compute", class = "btn-primary"))),
                 
                 fluidRow(box(id = "visualise.panel", title = "Visualise",
                     width = 4, status = "primary", solidHeader = TRUE,
+                    collapsible = TRUE,
 
                     selectInput(inputId = "panels", label = "Panels:",
                         choices = c(default_panels, other_panels),
@@ -214,7 +212,7 @@
                         class = "btn-primary")),
               
                 box(id = "output.panel", title = "Output", width = 8,
-                    status = "primary", solidHeader = TRUE,
+                    status = "primary", solidHeader = TRUE, collapsible = TRUE,
 
                     verbatimTextOutput(outputId = "object"),
               

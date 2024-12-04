@@ -52,9 +52,9 @@
 }
 
 #' @rdname utils
-.set_optarg <- function(item, loader, alternative = NULL, ...){
+.set_optarg <- function(item, loader = NULL, alternative = NULL, ...){
   
-    if( !is.null(item) ){
+    if( !(is.null(item) || is.null(loader)) ){
         out <- loader(item, ...)
     } else {
         out <- alternative

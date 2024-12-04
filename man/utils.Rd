@@ -24,7 +24,7 @@ An object of class \code{character} of length 5.
 
 .print_message(..., title = "Invalid input:")
 
-.set_optarg(item, loader, alternative = NULL, ...)
+.set_optarg(item, loader = NULL, alternative = NULL, ...)
 
 .check_formula(form, se)
 

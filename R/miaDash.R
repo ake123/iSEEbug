@@ -23,12 +23,16 @@
 #' @rdname miaDash
 #' @importFrom iSEE iSEE
 #' @importFrom utils packageVersion
+#' @importFrom htmltools tags
 miaDash <- function() {
 
     iSEE(
         landingPage = .landing_page,
-        appTitle = paste0("Microbiome Analysis Dashboard \U0001f9a0 - ",
-            packageVersion("miaDash"))
+        appTitle = tags$div(
+            style = "cursor: pointer; font-weight: 500",
+            onclick = "window.location='https://miadash-microbiome.2.rahtiapp.fi/'", 
+            paste0("Microbiome Analysis Dashboard - v",
+                packageVersion("miaDash"), " \U0001f9a0"))
     )
 
 }
