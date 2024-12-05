@@ -17,24 +17,25 @@
 
 #' @rdname utils
 #' @importFrom shiny showNotification
-.update_tse <- function(fun, fun_args) {
-  
-    messages <- c()
-  
-    withCallingHandlers({
+.update_tse <- function(tse, fun, fun_args) {
+
+    tse <- tryCatch({withCallingHandlers({
+        
+        do.call(fun, fun_args)
       
-        tse <- do.call(fun, fun_args)
+        # nocov start
+        }, message = function(m) {
+        
+            showNotification(conditionMessage(m))
+            invokeRestart("muffleMessage")
+        
+        })}, error = function(e) {
       
-    }, message = function(m) {
-      
-        messages <<- c(messages, conditionMessage(m))
-        invokeRestart("muffleMessage")
-    
-    })
-    
-    # nocov start
-    lapply(messages, showNotification)
-    # nocov end
+            .print_message(e, title = "Unexpected error:")
+            return(tse)
+          
+        })
+        # nocov end
   
     return(tse)
 }

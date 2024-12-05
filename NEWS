@@ -15,3 +15,6 @@ Changes in version 0.99.3
 * Added tree import option
 * Fixed bugs with RDS and unifrac
 * Added clickable title box
+
+Changes in version 0.99.5
+* Dealt with reporting unexpected errors

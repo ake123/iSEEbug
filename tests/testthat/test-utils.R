@@ -8,8 +8,8 @@ test_that("utils", {
         data(package = "mia")$results[idx, "Item"])
     
     expect_no_error(
-        tse <- .update_tse(transformAssay, list(x = tse, assay.type = "counts",
-            method = "relabundance"))
+        tse <- .update_tse(tse, transformAssay,
+            list(x = tse, assay.type = "counts", method = "relabundance"))
     )
     
     item <- NULL

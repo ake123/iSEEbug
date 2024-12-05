@@ -20,7 +20,7 @@ An object of class \code{character} of length 5.
 \usage{
 .import_datasets(selection)
 
-.update_tse(fun, fun_args)
+.update_tse(tse, fun, fun_args)
 
 .print_message(..., title = "Invalid input:")
 
