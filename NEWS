@@ -17,4 +17,5 @@ Changes in version 0.99.3
 * Added clickable title box
 
 Changes in version 0.99.5
-* Dealt with reporting unexpected errors
+* Implemented error check system
+* Added mia logo
