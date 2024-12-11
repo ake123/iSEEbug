@@ -75,15 +75,15 @@
                 req(input$main.file)
       
                 if( input$ftype == "biom" ){
-              
+
                     biom_object <- read_biom(input$main.file$datapath)
                     
                     fun_args <- list(x = biom_object,
                         removeTaxaPrefixes = input$rm.tax.pref,
                         rankFromPrefix = input$rank.from.pref)
-                
+
                     rObjects$tse <- .update_tse(
-                         rObjects$tse, convertFromBIOM, fun_args,
+                        rObjects$tse, convertFromBIOM, fun_args
                     )
               
                 } else if( input$ftype == "MetaPhlAn" ){
