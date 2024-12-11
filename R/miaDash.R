@@ -22,17 +22,21 @@
 #' @export
 #' @rdname miaDash
 #' @importFrom iSEE iSEE
+#' @importFrom shiny addResourcePath
 #' @importFrom utils packageVersion
 #' @importFrom htmltools tags
 miaDash <- function() {
-
+    
+    addResourcePath("assets", system.file("assets", package = "miaDash"))
+  
     iSEE(
         landingPage = .landing_page,
         appTitle = tags$div(
+            paste0("Microbiome Analysis Dashboard - v", packageVersion("miaDash")),
+            tags$img(src = "assets/mia_logo.png", height = "40px", style = "margin-left: 10px"),
             style = "cursor: pointer; font-weight: 500",
-            onclick = "window.location='https://miadash-microbiome.2.rahtiapp.fi/'", 
-            paste0("Microbiome Analysis Dashboard - v",
-                packageVersion("miaDash"), " \U0001f9a0"))
+            onclick = "window.location='https://miadash-microbiome.2.rahtiapp.fi/'") 
+            
     )
 
 }
