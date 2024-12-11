@@ -1,4 +1,4 @@
-# miaDash
+# miaDash <img src="inst/assets/mia_logo.png" align="right" width="120" />
 
 [![issues](https://img.shields.io/github/issues/microbiome/miaDash)](https://github.com/microbiome/miaDash/issues)
 [![pulls](https://img.shields.io/github/issues-pr/microbiome/miaDash)](https://github.com/microbiome/miaDash/pulls)

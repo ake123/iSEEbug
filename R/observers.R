@@ -63,7 +63,10 @@
                 fun_args <- list(assays = assay_list, colData = coldata,
                     rowData = rowdata, rowTree = row.tree, colTree = col.tree)
         
-                rObjects$tse <- .update_tse(TreeSummarizedExperiment, fun_args)
+                rObjects$tse <- .update_tse(
+                     rObjects$tse, TreeSummarizedExperiment, fun_args
+                )
+            
             })
       
         }else if( input$format == "foreign" ){
@@ -72,14 +75,16 @@
                 req(input$main.file)
       
                 if( input$ftype == "biom" ){
-              
+
                     biom_object <- read_biom(input$main.file$datapath)
                     
                     fun_args <- list(x = biom_object,
                         removeTaxaPrefixes = input$rm.tax.pref,
                         rankFromPrefix = input$rank.from.pref)
-                
-                    rObjects$tse <- .update_tse(convertFromBIOM, fun_args)
+
+                    rObjects$tse <- .update_tse(
+                        rObjects$tse, convertFromBIOM, fun_args
+                    )
               
                 } else if( input$ftype == "MetaPhlAn" ){
                   
@@ -91,7 +96,9 @@
                     fun_args <- list(file = input$main.file$datapath,
                         col.data = coldata, tree.file = treefile)
               
-                    rObjects$tse <- .update_tse(importMetaPhlAn, fun_args) 
+                    rObjects$tse <- .update_tse(
+                         rObjects$tse, importMetaPhlAn, fun_args
+                    ) 
                  
                 }
         
@@ -129,7 +136,7 @@
                 fun_args <- list(x = rObjects$tse, assay.type = input$subassay,
                     prevalence = input$prevalence, detection = input$detection)
                 
-                rObjects$tse <- .update_tse(subset_fun, fun_args)
+                rObjects$tse <- .update_tse(rObjects$tse, subset_fun, fun_args)
               
             })
           
@@ -140,7 +147,9 @@
             isolate({
                 
                 fun_args <- list(x = rObjects$tse, rank = input$taxrank)
-                rObjects$tse <- .update_tse(agglomerateByRank, fun_args)
+                rObjects$tse <- .update_tse(
+                     rObjects$tse, agglomerateByRank, fun_args
+                )
               
             })
           
@@ -170,7 +179,9 @@
                     method = input$trans.method, assay.type = input$assay.type,
                     MARGIN = input$margin, pseudocount = input$pseudocount)
                 
-                rObjects$tse <- .update_tse(transformAssay, fun_args)
+                rObjects$tse <- .update_tse(
+                     rObjects$tse, transformAssay, fun_args
+                )
                 
             })
           
@@ -213,7 +224,7 @@
                 fun_args <- list(x = rObjects$tse, name = name,
                     assay.type = input$estimate.assay, index = input$alpha.index)
                 
-                rObjects$tse <- .update_tse(addAlpha, fun_args)
+                rObjects$tse <- .update_tse(rObjects$tse, addAlpha, fun_args)
           
             })
         
@@ -274,11 +285,10 @@
                         formula = as.formula(input$rda.formula))
                   
                 }
-                print(beta_args)
+                
                 beta_fun <- eval(parse(text = paste0("run", input$bmethod)))
-                print(beta_fun)
-                rObjects$tse <- .update_tse(beta_fun, beta_args)
-              
+                
+                rObjects$tse <- .update_tse(rObjects$tse, beta_fun, beta_args)
             })
         
         }
