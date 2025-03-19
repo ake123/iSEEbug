@@ -225,7 +225,7 @@
           
             })
         
-        } else if( input$estimate == "beta" ){
+        }else if( input$estimate == "beta" ){
           
             if( input$ncomponents > nrow(rObjects$tse) - 1 ){
               
@@ -242,7 +242,7 @@
               
                 if( input$estimate.name != "" ){
                     name <- input$estimate.name
-                } else {
+                }else{
                     name <- input$bmethod
                 }
               
@@ -260,12 +260,12 @@
                         tree = list(rowTree(rObjects$tse)),
                         ntop = nrow(rObjects$tse), method = input$beta.index)
                     
-                } else if( input$bmethod %in% c("MDS", "NMDS") ){
+                }else if( input$bmethod %in% c("MDS", "NMDS") ){
                   
                     beta_args <- c(beta_args, FUN = vegdist,
                         method = input$beta.index)
                     
-                } else if( input$bmethod == "RDA" ){
+                }else if( input$bmethod == "RDA" ){
                   
                     if( input$rda.formula == "" ){
                         .print_message("Please enter a formula.")

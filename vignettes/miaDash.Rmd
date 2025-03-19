@@ -66,7 +66,9 @@ agglomerating by taxonomic level and transforming assays. Third, the dataset
 can be analysed through the Estimate tab, which provide common techniques to
 quantify alpha and beta diversity. Finally, results can be explored through the
 Visualise tab, where an interactive explorer can be launched with a customisable
-set of panels that illustrate different aspects of the data.
+set of panels that illustrate different aspects of the data. The full catalogue
+of available panels can be found
+[here](https://microbiome.github.io/iSEEtree/articles/panels.html).
 
 # Tutorial
 
