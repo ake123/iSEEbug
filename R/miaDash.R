@@ -42,7 +42,7 @@ miaDash <- function() {
 #' @importFrom shinyjs enable
 #' @importFrom iSEEtree .check_all_panels RowTreePlot RowTreePlot AbundancePlot
 #'   AbundanceDensityPlot RDAPlot ScreePlot LoadingPlot ColumnTreePlot
-#'   RowGraphPlot ColumnGraphPlot    
+#'   RowGraphPlot ColumnGraphPlot PrevalencePlot
 .launch_isee <- function(FUN, initial, session, rObjects) {
 
     # nocov start

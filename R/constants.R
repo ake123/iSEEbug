@@ -21,6 +21,6 @@ NULL
     "ComplexHeatmapPlot")
 
 #' @rdname constants
-.miaDashOtherPanels <- c("RDAPlot", "ScreePlot", "LoadingPlot",
-    "ColumnTreePlot", "RowGraphPlot", "ColumnGraphPlot", "ColumnDataPlot",
-    "RowDataPlot")
+.miaDashOtherPanels <- c("PrevalencePlot", "RDAPlot", "ScreePlot",
+    "LoadingPlot", "ColumnTreePlot", "RowGraphPlot", "ColumnGraphPlot",
+    "RowDataPlot", "ColumnDataPlot")
