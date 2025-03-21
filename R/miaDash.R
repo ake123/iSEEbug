@@ -37,35 +37,21 @@ miaDash <- function() {
             onclick = "window.location='https://miadash-microbiome.2.rahtiapp.fi/'") 
             
     )
-
 }
 
-#' @importFrom methods is
 #' @importFrom shinyjs enable
-#' @importFrom iSEE RowDataTable ColumnDataTable ReducedDimensionPlot
-#'   ComplexHeatmapPlot
-#' @importFrom iSEEtree RowTreePlot AbundancePlot RDAPlot AbundanceDensityPlot
-#'   LoadingPlot ColumnTreePlot
-#' @importFrom TreeSummarizedExperiment rowLinks colLinks
-#' @importFrom mia taxonomyRanks
-#' @importFrom SummarizedExperiment rowData colData
-#' @importFrom SingleCellExperiment reducedDims
+#' @importFrom iSEEtree .check_all_panels RowTreePlot RowTreePlot AbundancePlot
+#'   AbundanceDensityPlot RDAPlot ScreePlot LoadingPlot ColumnTreePlot
+#'   RowGraphPlot ColumnGraphPlot PrevalencePlot
 .launch_isee <- function(FUN, initial, session, rObjects) {
 
     # nocov start
     tse <- rObjects$tse
   
     initial <- lapply(initial, function(x) eval(parse(text = paste0(x, "()"))))
-    
-    initial <- .check_panel(tse, initial, "RowDataTable", rowData)
-    initial <- .check_panel(tse, initial, "ColumnDataTable", colData)
-    initial <- .check_panel(tse, initial, "RowTreePlot", rowLinks)
-    initial <- .check_panel(tse, initial, "AbundancePlot", taxonomyRanks)
-    initial <- .check_panel(tse, initial, "ReducedDimensionPlot", reducedDims)
-    initial <- .check_panel(tse, initial, "LoadingPlot", reducedDims)
-    initial <- .check_panel(tse, initial, "ColumnTreePlot", colLinks)
+    initial <- .check_all_panels(tse, initial)
   
-    FUN(SE = tse, INIT = initial)#, EXTRA = initial)
+    FUN(SE = tse, INIT = initial)
   
     enable("iSEE_INTERNAL_organize_panels")  # organize panels
     enable("iSEE_INTERNAL_link_graph")       # link graph

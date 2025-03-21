@@ -1,5 +1,5 @@
 Package: miaDash
-Version: 0.99.7
+Version: 0.99.8
 Authors@R: 
     c(person(given = "Giulio", family = "Benedetti", role = c("aut", "cre"),
            email = "giulio.benedetti@utu.fi",
@@ -43,7 +43,6 @@ Imports:
 Suggests:
     BiocStyle,
     knitr,
-    RefManageR,
     remotes,
     rmarkdown,
     testthat (>= 3.0.0)

@@ -204,8 +204,8 @@
                     collapsible = TRUE,
 
                     selectInput(inputId = "panels", label = "Panels:",
-                        choices = c(default_panels, other_panels),
-                        multiple = TRUE, selected = c(default_panels)),
+                        choices = c(.miaDashDefaultPanels, .miaDashOtherPanels),
+                        multiple = TRUE, selected = c(.miaDashDefaultPanels)),
                 
                     actionButton("launch", "Launch iSEE",
                         class = "btn-primary")),

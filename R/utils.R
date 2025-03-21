@@ -88,12 +88,3 @@
   
     return(panel_list)
 }
-
-#' @rdname utils
-default_panels <- c("RowDataTable", "ColumnDataTable", "RowTreePlot",
-    "AbundancePlot", "AbundanceDensityPlot", "ReducedDimensionPlot",
-    "ComplexHeatmapPlot")
-
-#' @rdname utils
-other_panels <- c("LoadingPlot", "ColumnTreePlot", "RDAPlot", "ColumnDataPlot",
-    "RowDataPlot")
