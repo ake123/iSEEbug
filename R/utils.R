@@ -1,9 +1,54 @@
-#' Utilities
+#' miaDash utilities
 #' 
-#' Helper functions and constants to support the app functionality.
+#' Helper functions to support the app functionality.
+#' 
+#' @param selection \code{Numeric vector}. A list of indices for the mia
+#'   datasets to return.
+#' 
+#' @param tse a
+#' \code{\link[TreeSummarizedExperiment:TreeSummarizedExperiment-constructor]{TreeSummarizedExperiment}}
+#' object.
+#' 
+#' @param fun \code{Function scalar}. Function to apply to \code{tse}.
+#' 
+#' @param fun.args \code{Named list}. A list of arguments to pass to \code{fun}.
+#' 
+#' @param title \code{Character scalar}. The title of the error message to
+#'   print. (Default: \code{"Invalid input:"})
+#' 
+#' @param item \code{Character scalar}. The file path from which the object
+#'   should be loaded.
+#' 
+#' @param loader \code{Function scalar}. The function to load \code{item}.
+#'   (Default: \code{NULL})
+#' 
+#' @param alternative an alternative output to return when at least one
+#'   \code{item} and \code{loader} are not defined. (Default: \code{NULL})
+#' 
+#' @param form \code{Character scalar} The formula to be checked.
+#' 
+#' @param ... Either a series of strings to form the message returned by
+#'   \code{.print_message} or named arguments for \code{loader}.
 #'
-#' @name utils
+#' @return
+#' \itemize{
+#' \item \code{.import_datasets}: returns the list of available mia datasets.
+#' \item \code{.update_tse}: returns a TreeSE object after applying \code{fun}
+#'   with arguments \code{fun.args}. Eventual messages and errors are also
+#'   printed.
+#' \item \code{.print_message}: returns a modalDialog with the error message
+#'   specified with \code{...} and titled \code{title}.
+#' \item \code{.set_optarg}: returns an optional element for a TreeSE
+#'   constructor. The output is either an object located at the file path
+#'   \code{item} and loaded with \code{loader} or \code{alternative}.
+#' \item \code{.check_formula}: returns \code{TRUE} or \code{FALSE} depending
+#'   whether or not all variables included in \code{form} are present in
+#'   \code{se} colData.
+#' }
+#'
 #' @keywords internal
+#' @name utils
+NULL
 
 #' @rdname utils
 .import_datasets <- function(selection) {
@@ -16,11 +61,11 @@
 }
 
 #' @rdname utils
-.update_tse <- function(tse, fun, fun_args) {
+.update_tse <- function(tse, fun, fun.args) {
 
     tse <- tryCatch({withCallingHandlers({
         
-        do.call(fun, fun_args)
+        do.call(fun, fun.args)
       
         # nocov start
         }, message = function(m) {
@@ -64,27 +109,11 @@
 
 #' @rdname utils
 #' @importFrom SummarizedExperiment colData
-.check_formula <- function(form, se){
+.check_formula <- function(form, tse){
   
     form <- gsub("data ~\\s*", "", form)
     vars <- unlist(strsplit(form, "\\s*[\\+|\\*]\\s*"))
   
-    cond <- all(vars %in% names(colData(se)))
+    cond <- all(vars %in% names(colData(tse)))
     return(cond)
-}
-
-#' @rdname utils
-#' @importFrom S4Vectors isEmpty
-#' @importFrom methods is
-.check_panel <- function(se, panel_list, panel_class, panel_fun, wtext) {
-  
-    no_keep <- unlist(lapply(panel_list, function(x) is(x, panel_class)))
-  
-    if( any(no_keep) && (is.null(panel_fun(se)) || isEmpty(panel_fun(se))) ){
-        panel_list <- panel_list[!no_keep]
-        warning("no valid ", as.character(substitute(panel_fun)),
-            " fields for ", panel_class, call. = FALSE)
-    }
-  
-    return(panel_list)
 }

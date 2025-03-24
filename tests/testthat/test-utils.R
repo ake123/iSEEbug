@@ -21,13 +21,4 @@ test_that("utils", {
   
     expect_true(.check_formula("data ~ patient_status + cohort", tse))
     expect_false(.check_formula("data ~ wrong_var + sample_name", tse))
-    
-    panels <- c(RowDataTable(), ReducedDimensionPlot())
-    
-    expect_warning(
-        expect_length(
-            .check_panel(tse, panels, "ReducedDimensionPlot", reducedDims), 1
-        )
-    )
-
 })

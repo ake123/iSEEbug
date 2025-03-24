@@ -10,6 +10,7 @@
 #'
 #' @author Giulio Benedetti
 #' 
+#' @keywords internal
 #' @name constants
 #' @aliases .miaDashDefaultPanels
 #' .miaDashOtherPanels
