@@ -5,25 +5,49 @@
 \alias{constants}
 \alias{.miaDashDefaultPanels}
 \alias{.miaDashOtherPanels}
+\alias{.transformMethods}
+\alias{.alphaMetrics}
+\alias{.betaMetrics}
+\alias{.betaMethods}
 \title{Constants}
 \format{
 An object of class \code{character} of length 7.
 
 An object of class \code{character} of length 9.
+
+An object of class \code{character} of length 20.
+
+An object of class \code{character} of length 23.
+
+An object of class \code{character} of length 4.
+
+An object of class \code{character} of length 4.
 }
 \usage{
 .miaDashDefaultPanels
 
 .miaDashOtherPanels
+
+.transformMethods
+
+.alphaMetrics
+
+.betaMetrics
+
+.betaMethods
 }
 \description{
-Constant values used throughout miaDash panels and extensions.
+Constant values used throughout the miaDash app.
 }
 \section{Panel layout}{
 
 \describe{
 \item{\code{.miaDashDefaultPanels}}{List of panel names in the default layout of miaDash.}
 \item{\code{.miaDashOtherPanels}}{List of panel names not in the default layout of miaDash.}
+\item{\code{.transformMethods}}{List of transformations applicable to assays.}
+\item{\code{.alphaMetrics}}{List of alpha diversity metrics.}
+\item{\code{.betaMetrics}}{List of beta diversity metrics.}
+\item{\code{.betaMethods}}{List of beta diversity methods.}
 }
 }
 

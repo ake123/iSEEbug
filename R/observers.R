@@ -152,17 +152,6 @@
             })
           
         } else if( input$manipulate == "transform" ){
-
-            if( input$trans.method == "clr" && !input$pseudocount &&
-                any(assay(rObjects$tse, input$assay.type) <= 0)){
-              
-                .print_message(
-                    "'clr' cannot be used with non-positive data:",
-                    "please turn on pseudocount."
-                )
-              
-                return()
-            }
           
             isolate({
                 req(input$assay.type)

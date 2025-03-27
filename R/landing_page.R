@@ -141,8 +141,7 @@
                                 label = "Assay:", choices = NULL),
               
                             selectInput(inputId = "trans.method",
-                                label = "Method:", choices = c("relabundance",
-                                "clr", "standardize")),
+                                label = "Method:", choices = .transformMethods),
               
                             checkboxInput(inputId = "pseudocount",
                                 label = "Pseudocount"),
@@ -168,20 +167,21 @@
                       
                             selectInput(inputId = "alpha.index",
                                 label = "Metric:", multiple = TRUE,
-                                choices = c("coverage", "shannon", "faith"))),
+                                choices = .alphaMetrics)),
 
                         tabPanel(title = "Beta", value = "beta",
                            
-                            radioButtons(inputId = "bmethod", label = "Method:",
-                                choices = c("MDS", "NMDS", "PCA", "RDA"),
+                            radioButtons(inputId = "bmethod",
+                                label = "Method:", choices = .betaMethods,
                                 inline = TRUE),
                       
                             conditionalPanel(
-                                condition = "input.bmethod != 'PCA'",
+                                condition = paste("input.bmethod == 'MDS' || ",
+                                    "input.bmethod == 'NMDS' || ",
+                                    "input.bmethod == 'RDA'"),
                             
                                 selectInput(inputId = "beta.index",
-                                    label = "Metric:", choices = c("euclidean",
-                                    "bray", "jaccard", "unifrac"))),
+                                    label = "Metric:", choices = .betaMetrics)),
                       
                             conditionalPanel(
                                 condition = "input.bmethod == 'RDA'",

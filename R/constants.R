@@ -1,19 +1,23 @@
 #' Constants
 #'
-#' Constant values used throughout miaDash panels and extensions.
+#' Constant values used throughout the miaDash app.
 #' 
 #' @section Panel layout:
 #' \describe{
 #' \item{\code{.miaDashDefaultPanels}}{List of panel names in the default layout of miaDash.}
 #' \item{\code{.miaDashOtherPanels}}{List of panel names not in the default layout of miaDash.}
+#' \item{\code{.transformMethods}}{List of transformations applicable to assays.}
+#' \item{\code{.alphaMetrics}}{List of alpha diversity metrics.}
+#' \item{\code{.betaMetrics}}{List of beta diversity metrics.}
+#' \item{\code{.betaMethods}}{List of beta diversity methods.}
 #' }
 #'
 #' @author Giulio Benedetti
 #' 
 #' @keywords internal
 #' @name constants
-#' @aliases .miaDashDefaultPanels
-#' .miaDashOtherPanels
+#' @aliases .miaDashDefaultPanels .miaDashOtherPanels .transformMethods
+#' .alphaMetrics .betaMetrics .betaMethods
 NULL
 
 #' @rdname constants
@@ -25,3 +29,25 @@ NULL
 .miaDashOtherPanels <- c("PrevalencePlot", "RDAPlot", "ScreePlot",
     "LoadingPlot", "ColumnTreePlot", "RowGraphPlot", "ColumnGraphPlot",
     "RowDataPlot", "ColumnDataPlot")
+
+#' @rdname constants
+.transformMethods <- c("alr", "chi.square", "clr", "css", "frequency",
+    "hellinger", "log", "log10", "log2", "max", "normalize", "pa", "philr",
+    "range", "rank", "rclr", "relabundance", "rrank", "standardize", "total")
+
+#' @rdname constants
+.alphaMetrics <- c("coverage_diversity", "fisher_diversity", "faith_diversity",
+    "gini_simpson_diversity", "inverse_simpson_diversity",
+    "log_modulo_skewness_diversity", "shannon_diversity", "absolute_dominance",
+    "dbp_dominance", "core_abundance_dominance", "gini_dominance",
+    "dmn_dominance", "relative_dominance", "simpson_lambda_dominance",
+    "camargo_evenness", "pielou_evenness", "simpson_evenness", "evar_evenness",
+    "bulla_evenness", "ace_richness", "chao1_richness", "hill_richness",
+    "observed_richness")
+
+#' @rdname constants
+.betaMetrics <- c("euclidean", "bray", "jaccard", "unifrac")
+
+#' @rdname constants
+.betaMethods <- c("MDS", "NMDS", "PCA", "RDA")
+#"TSNE", "UMAP")
