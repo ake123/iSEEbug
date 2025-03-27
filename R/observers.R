@@ -166,6 +166,11 @@
                     method = input$trans.method, assay.type = input$assay.type,
                     MARGIN = input$margin, pseudocount = input$pseudocount)
                 
+                #if( input$trans.method == "philr" ){
+                #    fun_args <- c(fun_args, tree = list(rowTree(rObjects$tse)),
+                #        node.labels = rowTree(tse)$node.label)
+                #}
+                
                 rObjects$tse <- .update_tse(
                      rObjects$tse, transformAssay, fun_args
                 )
