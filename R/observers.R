@@ -152,17 +152,6 @@
             })
           
         } else if( input$manipulate == "transform" ){
-
-            if( input$trans.method == "clr" && !input$pseudocount &&
-                any(assay(rObjects$tse, input$assay.type) <= 0)){
-              
-                .print_message(
-                    "'clr' cannot be used with non-positive data:",
-                    "please turn on pseudocount."
-                )
-              
-                return()
-            }
           
             isolate({
                 req(input$assay.type)
@@ -176,6 +165,11 @@
                 fun_args <- list(x = rObjects$tse, name = name,
                     method = input$trans.method, assay.type = input$assay.type,
                     MARGIN = input$margin, pseudocount = input$pseudocount)
+                
+                #if( input$trans.method == "philr" ){
+                #    fun_args <- c(fun_args, tree = list(rowTree(rObjects$tse)),
+                #        node.labels = rowTree(tse)$node.label)
+                #}
                 
                 rObjects$tse <- .update_tse(
                      rObjects$tse, transformAssay, fun_args

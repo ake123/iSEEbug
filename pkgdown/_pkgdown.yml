@@ -1,6 +1,10 @@
 destination: docs
 reference:
 - title: App
+- subtitle: Main
 - contents:
   - miaDash
+- subtitle: Other
+- contents:
+  - utils
   - constants
