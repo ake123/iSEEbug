@@ -1,6 +1,6 @@
-pandoc: '3.6'
+pandoc: 3.6.3
 pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   miaDash: miaDash.html
-last_built: 2024-12-14T07:48Z
+last_built: 2025-03-27T08:48Z
