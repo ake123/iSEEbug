@@ -29,7 +29,6 @@ Imports:
     htmltools,
     iSEEtree (>= 1.1.4),
     mia,
-    philr,
     rintrojs,
     scater,
     shinydashboard,
@@ -43,6 +42,7 @@ Imports:
 Suggests:
     BiocStyle,
     knitr,
+    philr,
     remotes,
     rmarkdown,
     testthat (>= 3.0.0)
