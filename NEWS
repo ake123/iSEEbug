@@ -19,3 +19,6 @@ Changes in version 0.99.3
 Changes in version 0.99.5
 * Implemented error check system
 * Added mia logo
+
+Changes in version 0.99.12
+* Fixed tab title
