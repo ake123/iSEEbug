@@ -1,5 +1,5 @@
 Package: miaDash
-Version: 0.99.11
+Version: 0.99.12
 Authors@R: 
     c(person(given = "Giulio", family = "Benedetti", role = c("aut", "cre"),
            email = "giulio.benedetti@utu.fi",
@@ -21,7 +21,7 @@ License: Artistic-2.0
 Encoding: UTF-8
 Depends:
     R (>= 4.4.0),
-    iSEE,
+    iSEE (>= 2.19.4),
     shiny
 Imports:
     ape,
